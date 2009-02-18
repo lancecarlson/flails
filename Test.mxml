@@ -3,9 +3,17 @@
 		<![CDATA[
 			import flexunit.framework.TestSuite;
 			
+			import lib.Flails;
+			import lib.request.*;
+			
+			import test.*;
+			import test.request.*;
+			
 			private function createTestSuite():TestSuite {
 				var testSuite:TestSuite = new TestSuite();
-/*				testSuite.addTestSuite(CamelotRequestPathTest);*/
+				testSuite.addTestSuite(FlailsTest);
+				testSuite.addTestSuite(RequestTest);
+				testSuite.addTestSuite(RequestPathTest);
 				return testSuite;
 			}
 			

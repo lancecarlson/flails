@@ -1,15 +1,18 @@
-class UsersController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
-  
+class UsersController < ApplicationController  
   # Protect these actions behind an admin login
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
   before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
   
-
-  # render new.rhtml
   def new
     @user = User.new
+  end
+  
+  def show
+    @user = User.find(params[:id])
+    
+    respond_to do |format|
+      format.json { render :json => @user.to_json }
+    end
   end
  
   def create
