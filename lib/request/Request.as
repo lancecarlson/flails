@@ -10,27 +10,44 @@ package lib.request {
   public class Request {
     public var resource:String;
     public var resourceID:uint;
+    private var eventHandlers:Array = new Array;
+    private var httpService:HTTPService = new HTTPService();
     
     public function Request(resource:String) {
       this.resource = resource;
     }
     
-    public function dispatch(resultHandler:Function):void {
-      var httpService:HTTPService = new HTTPService();
-      
+    public function dispatch():void {
       httpService.url = requestPath().fullPath();
-      
-      //you need to tell the service who's listening     
-      httpService.addEventListener(ResultEvent.RESULT, resultHandler);     
       httpService.send();
     }
     
-    private function resultHandler(event:ResultEvent):void {     
-      var httpService:HTTPService = event.target as HTTPService;     
-      
-      //don't forget to stop listening. we don't want memory leaks!     
-      httpService.removeEventListener(ResultEvent.RESULT, resultHandler);  
+    public function cleanHandler(event:ResultEvent):void {
+      var httpService:HTTPService = event.target as HTTPService;
+      httpService.removeEventListener(event.type, this.resultHandler);
     }
+    
+    public function resultHandler(resultHandler:Function):void {
+      addHandler(ResultEvent.RESULT, resultHandler);
+    }
+    
+    public function faultHandler(faultHandler:Function):void {
+      addHandler("fault", faultHandler);
+    }
+    
+    private function addHandler(handlerType:String, handlerFunction:Function):void {
+      httpService.addEventListener(handlerType, handlerFunction);
+    }
+    
+/*    private function resultHandler(event:ResultEvent):void {     
+      var httpService:HTTPService = event.target as HTTPService;
+      httpService.removeEventListener(resultEvent, eventHandlers[resultEvent]);
+      
+      for each (var resultEvent:String in eventHandlers) {
+      }
+      
+      Alert.show("bleh");
+    }*/
     
     private function requestPath():RequestPath {
       return new RequestPath(this.resource, null, this.resourceID);
