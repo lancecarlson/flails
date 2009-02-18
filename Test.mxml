@@ -1,0 +1,19 @@
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:flexui="flexunit.flexui.*" creationComplete="handleCreationComplete();">
+	<mx:Script>
+		<![CDATA[
+			import flexunit.framework.TestSuite;
+			
+			private function createTestSuite():TestSuite {
+				var testSuite:TestSuite = new TestSuite();
+/*				testSuite.addTestSuite(CamelotRequestPathTest);*/
+				return testSuite;
+			}
+			
+			private function handleCreationComplete():void {
+				testRunner.test = createTestSuite();
+				testRunner.startTest();
+			}
+		]]>
+	</mx:Script>
+	<flexui:TestRunnerBase id="testRunner" width="100%" height="100%"/>
+</mx:Application>
