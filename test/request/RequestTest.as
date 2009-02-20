@@ -1,4 +1,4 @@
-package test.request {
+/*package test.request {
   import mx.controls.Alert;
   import flash.events.*;
   import mx.rpc.events.*;
@@ -11,10 +11,8 @@ package test.request {
     
     public function testDispatch():void {
       var request:Request = new Request("post");      
-      request.resultHandler(function(event:ResultEvent):void {
+      request.resultHandler(function(dataObject:*):void {
         Alert.show("test");
-        
-        request.cleanHandler(event);
       });
       
       request.faultHandler(function():void {
@@ -25,4 +23,4 @@ package test.request {
     }
     
   }
-}
+}*/

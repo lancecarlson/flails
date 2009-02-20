@@ -2,7 +2,7 @@ package test {
   import flash.events.Event;
   import flash.net.URLLoader;
   import flash.net.URLRequest;
-  import lib.Flails;
+  import org.flails.Flails;
   
   import flexunit.framework.TestCase;
   

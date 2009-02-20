@@ -1,5 +1,4 @@
-package lib {
-  import lib.json.*;
+package org.flails {
   
   public class Flails {
     public var request:FlailsRequest;
