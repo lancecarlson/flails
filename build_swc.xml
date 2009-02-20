@@ -2,11 +2,11 @@
   <compiler>
     <external-library-path>
       <path-element>${flexlib}/libs/player/9/playerglobal.swc</path-element>
-      <path-element>swc/as3httpclientlib-1_0_1.swc</path-element>
+      <path-element>swc/as3corelib.swc</path-element>
     </external-library-path>
     
     <source-path>
-      <path-element>src</path-element>
+      <path-element>org</path-element>
     </source-path>
   </compiler>
   <include-classes>
