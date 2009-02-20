@@ -17,7 +17,23 @@ package test.request {
       });
       
       request.onError(function():void {
-        Alert("Darn");
+        Alert.show("Darn");
+      })
+      
+      assertEquals("test", "test");
+    }
+    
+    public function testFindByID():void {
+      const Post:Model = new Model("post");
+      var request:Request = Post.findByID(1);
+      request.onComplete(function(posts:*):void {
+        posts.forEach(function(post:*, index:int, array:Array):void {
+          Alert.show(post.subject);
+        });
+      });
+      
+      request.onError(function():void {
+        Alert.show("Darn");
       })
       
       assertEquals("test", "test");
