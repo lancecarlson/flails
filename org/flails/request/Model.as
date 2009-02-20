@@ -17,5 +17,10 @@ package org.flails.request {
     public function findAll():Request {
       return this.request.dispatch();
     }
+    
+    public function findByID(id:uint):Request {
+      this.request.resourceID = id;
+      this.request.dispatch();
+    }
   }
 }

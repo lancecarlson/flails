@@ -10,6 +10,8 @@ package org.flails.request {
   public class Request {
     public var resource:String;
     public var resourceID:uint;
+    public var method:String = "GET";
+    public var serialization:String = "json";
     private var service:*;
     private var loader:URLLoader = new URLLoader();
     private var request:URLRequest = new URLRequest();
@@ -34,14 +36,16 @@ package org.flails.request {
     
     public function Request(resource:String) {
       this.resource = resource;
-/*      this.service = new JSONService(requestPath().fullPath());*/
       
-      this.request.url = ("http://localhost:3000/posts.json");
-      this.request.method = URLRequestMethod.GET;
+      this.request.url = requestPath().fullPath();
+      this.request.method = method;
 /*      this.request.data = new URLVariables("name=John+Doe");*/
       
-/*      addHeader("Content-Type", "application/x-www-form-urlencoded");*/
-      addHeader("Content-Type", "application/json");
+      if (this.method == "GET") {
+        addHeader("Content-Type", "application/json");
+      } else if (this.method == "POST") {
+        addHeader("Content-Type", "application/x-www-form-urlencoded");
+      }
     }
     
     public function dispatch():Request {
@@ -61,7 +65,7 @@ package org.flails.request {
     }
     
     public function onError(errorHandler:Function):void {
-      addHandler("error", errorHandler);
+      addHandler("ioError", errorHandler);
     }
     
     public function addHeader(name:String, value:String):void {

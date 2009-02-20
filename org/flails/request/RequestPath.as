@@ -1,6 +1,6 @@
 package org.flails.request {
   public class RequestPath {
-    public var host:String = "http://localhost:3000";
+    public var host:String = "";
     private var resource:String;
     private var action:String;
     private var id:uint;
