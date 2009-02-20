@@ -1,0 +1,20 @@
+Installation:
+1) Download the swc file in the pkg folder.
+2) Include the swc file into your library path
+3) Setup your rails app to respond to json requests (TODO: Provide examples)
+4) Profit!
+
+Example usage:
+
+const Post:Model = new Model("post");
+var request:Request = Post.findAll();
+
+request.onComplete(function(posts:*):void {
+  posts.forEach(function(post:*, index:int, array:Array):void {
+    Alert.show(post.subject);
+  });
+});
+
+request.onError(function():void {
+  Alert("Darn");
+})
