@@ -12,6 +12,7 @@ package test.request {
       var request:Request = Post.findAll();
       request.onComplete(function(posts:*):void {
         posts.forEach(function(post:*, index:int, array:Array):void {
+          Alert.show("several");
           Alert.show(post.subject);
         });
       });
@@ -26,10 +27,9 @@ package test.request {
     public function testFindByID():void {
       const Post:Model = new Model("post");
       var request:Request = Post.findByID(1);
-      request.onComplete(function(posts:*):void {
-        posts.forEach(function(post:*, index:int, array:Array):void {
-          Alert.show(post.subject);
-        });
+      request.onComplete(function(post:*):void {
+        Alert.show("one");
+        Alert.show(post.subject);
       });
       
       request.onError(function():void {

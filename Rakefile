@@ -17,5 +17,5 @@ task :test do
   cmd << " -- #{CURRENT_DIR}/Test.mxml"
     
   puts `#{cmd}`
-  system("open", "http://localhost:3000/test/results.swf")
+  `open http://localhost:3000/test/results.swf`
 end

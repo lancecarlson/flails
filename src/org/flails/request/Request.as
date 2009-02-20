@@ -59,7 +59,8 @@ package org.flails.request {
     public function onComplete(completeHandler:Function):void {      
       var completeHandlerProxy:Function = function(event:Event):void {
         var response:URLLoader = URLLoader(event.target);
-        var serializedData:* = new JSONService(response.data).encode();
+        var serializer:* = new JSONService(response.data);
+        var serializedData:* = resourceID == 0 ? serializer.getList() : serializer.getFirst();
         
         completeHandler.call(this, serializedData);
       }

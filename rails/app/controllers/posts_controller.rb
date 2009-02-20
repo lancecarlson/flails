@@ -5,6 +5,7 @@ class PostsController < ApplicationController
     @posts = Post.find(:all, :limit => 10)
     
     respond_to do |format|
+      format.html { render :text => @posts.to_json }
       format.json { render :json => @posts.to_json }
     end
   end

@@ -6,14 +6,24 @@ Installation:
 
 Example usage:
 
+const Comment:Model = new Model(["post", "comment"])
+var request:Request = Comment.findAll();
+
 const Post:Model = new Model("post");
 var request:Request = Post.findAll();
 
 request.onComplete(function(posts:*):void {
   posts.forEach(function(post:*, index:int, array:Array):void {
     Alert.show(post.subject);
+		post.comments.forEach(function(comment:*, index:int, array:Array):void {
+			Alert.show(comment.body);
+		})
   });
 });
+
+request.onProgress(function():void {
+	Alert.show("Progressing!");
+})
 
 request.onError(function():void {
   Alert("Darn");

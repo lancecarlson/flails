@@ -18,8 +18,12 @@ package org.flails.request {
       this.decoded = JSON.decode(this.data);
     }
     
-    public function encode():* {
-      return this.decoded.map(serializeObject, this);
+    public function getFirst():DataObject {
+      return serializeObject(this.decoded[0], 0, this.decoded);
+    }
+    
+    public function getList():* {
+      return this.decoded.reverse().map(serializeObject, this);
     }
     
     public function serializeObject(object:Object, index:int, array:Array):DataObject {
