@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2009 Lance Carlson
+ * See LICENSE for full license information.
+ */
+ 
 package org.flails.request {
 
   import flash.events.*;
