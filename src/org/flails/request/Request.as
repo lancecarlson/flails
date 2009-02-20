@@ -1,6 +1,4 @@
 package org.flails.request {
-  
-  import mx.controls.Alert;
 
   import flash.events.*;
   import flash.net.*;

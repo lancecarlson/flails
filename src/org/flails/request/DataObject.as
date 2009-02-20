@@ -1,7 +1,5 @@
 package org.flails.request {
   
-  import mx.controls.Alert;
-  
   dynamic public class DataObject extends Object {
     
     public static function create(json:Object):DataObject {

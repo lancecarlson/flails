@@ -6,13 +6,14 @@
     </external-library-path>
     
     <source-path>
-      <path-element>org</path-element>
+      <path-element>src</path-element>
     </source-path>
   </compiler>
   <include-classes>
-      
-      <class>org.flails.Flails</class>
 
+      <class>org.flails.Flails</class>
+			
+			<class>org.flails.request.DataObject</class>
       <class>org.flails.request.JSONService</class>
       <class>org.flails.request.Model</class>
       <class>org.flails.request.Request</class>

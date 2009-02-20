@@ -1,7 +1,7 @@
 package org.flails {
   
   public class Flails {
-    public var request:FlailsRequest;
+/*    public var request:FlailsRequest;
     
     public function Flails(resource:String) {
       this.request = new FlailsRequest(resource);
@@ -34,7 +34,7 @@ package org.flails {
       request.resourceID = attributes.id;
       request.method = request.DELETE;
       request.dispatch(resultHandler);
-    }
+    }*/
        
   }
 }

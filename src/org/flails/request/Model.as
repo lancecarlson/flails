@@ -1,8 +1,5 @@
 package org.flails.request {
   
-/*  import org.flails.request.JSONService;*/
-
-  import mx.controls.Alert;
   import org.flails.request.Request;
   
   public class Model {
@@ -20,7 +17,7 @@ package org.flails.request {
     
     public function findByID(id:uint):Request {
       this.request.resourceID = id;
-      this.request.dispatch();
+      return this.request.dispatch();
     }
   }
 }
