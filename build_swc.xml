@@ -13,8 +13,8 @@
 
       <class>org.flails.Flails</class>
 			
-			<class>org.flails.request.DataObject</class>
-      <class>org.flails.request.JSONService</class>
+			<class>org.flails.request.ModelObject</class>
+      <class>org.flails.request.JSONSerializer</class>
       <class>org.flails.request.Model</class>
       <class>org.flails.request.Request</class>
       <class>org.flails.request.RequestPath</class>
