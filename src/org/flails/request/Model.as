@@ -2,27 +2,54 @@
  * Copyright (c) 2009 Lance Carlson
  * See LICENSE for full license information.
  */
- 
+
 package org.flails.request {
   
+  import mx.controls.Alert;
   import org.flails.request.Request;
   
   public class Model {
     public var resource:String;
-    private var request:Request;
     
     public function Model(resource:String) {
       this.resource = resource;
-      this.request = new Request(resource);
     }
     
     public function findAll():Request {
-      return this.request.dispatch();
+      return newRequest().dispatch();
     }
     
     public function findByID(id:uint):Request {
-      this.request.resourceID = id;
-      return this.request.dispatch();
+      var request:Request = newRequest();
+      request.resourceID = id;
+      return request.dispatch();
+    }
+    
+    public function create(attributes:Object):Request {
+      var request:Request = newRequest();
+      request.method = "POST";
+      request.pushParams(attributes);
+      return request.dispatch();
+    }
+    
+    public function update(id:uint, attributes:Object):Request {
+      var request:Request = newRequest();
+      request.resourceID = id;
+      request.method = "PUT";
+      request.pushParams(attributes);
+      return request.dispatch();
+    }
+    
+    public function destroy(id:uint):Request {
+      var request:Request = newRequest();
+      request.resourceID = id;
+      request.method = "DELETE";
+      request.pushParams({});
+      return request.dispatch();
+    }
+    
+    private function newRequest():Request {
+      return new Request(resource);
     }
   }
 }

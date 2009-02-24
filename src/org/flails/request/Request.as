@@ -2,9 +2,20 @@
  * Copyright (c) 2009 Lance Carlson
  * See LICENSE for full license information.
  */
- 
+
+/*
+Client does not handle status codes over 200 because of flash and URLLoader. Therefore, all validation 
+errors or NotFound errors need to be sent back with a 200 status code. Whenever an exception is raised, 
+an IOError is fired which is automatically handled by the framework to Alert that there was a problem. 
+
+Check this for details: 
+
+http://stackoverflow.com/questions/188887/how-to-access-as3-urlloader-return-data-on-ioerrorevent
+*/
 package org.flails.request {
 
+  import mx.controls.Alert;
+  
   import flash.events.*;
   import flash.net.*;
   
@@ -18,6 +29,8 @@ package org.flails.request {
     private var service:*;
     private var loader:URLLoader = new URLLoader();
     private var request:URLRequest = new URLRequest();
+    private var completeHandler:Function;
+    private var errorHandler:Function;
     
     // Dispatched after all the received data is decoded and placed in the data property of the URLLoader object. The received data may be accessed once this event has been dispatched.
     public const COMPLETE:String = "complete";
@@ -39,49 +52,90 @@ package org.flails.request {
     
     public function Request(resource:String) {
       this.resource = resource;
-      
-      this.request.url = requestPath().fullPath();
-      this.request.method = method;
-/*      this.request.data = new URLVariables("name=John+Doe");*/
-      
-      if (this.method == "GET") {
-        addHeader("Content-Type", "application/json");
-      } else if (this.method == "POST") {
-        addHeader("Content-Type", "application/x-www-form-urlencoded");
-      }
     }
     
     public function dispatch():Request {
+      configureRequest();
+      addHandler(HTTP_STATUS, httpStatusHandler);
+      
       this.loader.load(this.request);
       return this;
     }
     
-    public function onComplete(completeHandler:Function):void {      
+    public function pushParams(params:Object):void {
+      var variables:URLVariables = new URLVariables();
+      
+      if (this.method == "PUT" || this.method == "DELETE") {
+        variables["_method"] = this.method.toLowerCase();
+      }
+      
+      // Nested parameters created to account for rails style parameter mapping example:
+      // {"post" => {"body" => "test"}}
+      for (var param:String in params) {
+        variables[resource + "[" + param + "]"] = params[param];
+      }
+      
+      this.request.data = variables;
+    }
+    
+    public function onSuccess(completeHandler:Function):Request {
+      return onComplete(completeHandler);
+    }
+    
+    public function onComplete(completeHandler:Function):Request {      
       var completeHandlerProxy:Function = function(event:Event):void {
         var response:URLLoader = URLLoader(event.target);
-        var serializer:* = new JSONService(response.data);
-        var serializedData:* = resourceID == 0 ? serializer.getList() : serializer.getFirst();
-        
+        var serializer:* = new JSONSerializer(response.data);
+        var serializedData:* = (resourceID == 0 && method != "POST") ? serializer.getList() : serializer.getFirst();
+
         completeHandler.call(this, serializedData);
       }
-        
+      
       addHandler("complete", completeHandlerProxy);
+      
+      return this;
     }
     
     public function onError(errorHandler:Function):void {
-      addHandler("ioError", errorHandler);
+      this.errorHandler = errorHandler;
+      
+      var errorHandlerProxy:Function = function(event:Event):void {
+        var response:URLLoader = URLLoader(event.target);
+        Alert.show(response.data);
+
+        errorHandler.call(this, response.data);
+      }
+      
+      addHandler("ioError", errorHandlerProxy);
     }
     
     public function addHeader(name:String, value:String):void {
       this.request.requestHeaders.push(new URLRequestHeader(name, value));
     }
     
-    private function requestPath():RequestPath {
-      return new RequestPath(this.resource, null, this.resourceID, "json");
+    private function requestPath(mime:String=null):RequestPath {
+      return new RequestPath(this.resource, null, this.resourceID, mime);
     }
     
     private function addHandler(handlerType:String, handlerFunction:Function):void {
       this.loader.addEventListener(handlerType, handlerFunction);
+    }
+    
+    private function configureRequest():void {
+      
+      this.request.url = requestPath("json").fullPath();
+      
+      if (this.method == "GET") {
+        addHeader("Content-Type", "application/json");
+      } else if (this.method == "POST" || this.method == "PUT" || this.method == "DELETE") {
+        this.request.method = "POST";
+        addHeader("Content-Type", "application/x-www-form-urlencoded");
+      }
+    }
+    
+    private function httpStatusHandler(event:HTTPStatusEvent):void {
+      Alert.show("httpStatusHandler: " + event);
+      Alert.show("status: " + event.status);
     }
 
   }
