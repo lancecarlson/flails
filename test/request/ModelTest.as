@@ -61,10 +61,11 @@ package test.request {
       Post.update(1, {
         subject: "This post was updated", 
         body: "Here is an existing post updated through Flails!"
-      }).onSuccess(function():void {
-        Alert.show("updated!");
+      }).onSuccess(function(post:*):void {
+        assertEquals("This post was updated", post.subject);
+        assertEquals("Here is an existing post updated through Flails!", post.body);
       }).onError(function():void {
-        Alert.show("Darn");
+        Alert.show("something went wrong with testUpdate()");
       })
     }
     

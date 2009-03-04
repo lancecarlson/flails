@@ -14,7 +14,7 @@
 				
 				testSuite.addTestSuite(FlailsTest);
 				testSuite.addTestSuite(ModelObjectTest);
-/*				testSuite.addTestSuite(ModelTest);*/
+				testSuite.addTestSuite(ModelTest);
 /*				testSuite.addTestSuite(RequestTest);*/
 /*				testSuite.addTestSuite(RequestPathTest);*/
 				return testSuite;

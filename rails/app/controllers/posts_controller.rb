@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       if @post.save
-        format.json { render :json => @post, :status => :created, :location => @account }
+        format.json { render :json => @post, :status => :created }
       else
         format.json { render :json => @post.errors, :status => :unprocessable_entity }
       end
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.json { head :ok }
+        format.json { render :json => @post }
       else
         format.json { render :json => @post.errors, :status => :unprocessable_entity }
       end
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
   def destroy
     respond_to do |format|
       if @post.destroy
-        format.json { head :ok }
+        format.json { render :json => @post }
       else
         format.json { render :json => @post.errors }
       end
