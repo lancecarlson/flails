@@ -27,7 +27,18 @@ package org.flails.request {
     }
     
     public function serializeObject(object:Object, index:int=0, array:Array=null):Object {
-      return ModelObject.create(object);
+      var type:String = findType(object);
+      var modelObject:ModelObject = new ModelObject(type);
+      
+      modelObject.setAttributes(object[type]);
+      
+      return modelObject;
     }
+    
+    private static function findType(json:Object):String {
+      for (var key:String in json) { var type:String = key; }
+      return key;
+    }
+    
   }
 }

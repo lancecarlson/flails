@@ -5,7 +5,6 @@
 
 package org.flails.request {
   
-  import mx.controls.Alert;
   import org.flails.request.Request;
   
   public class Model {

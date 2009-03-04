@@ -13,11 +13,11 @@ Check this for details:
 http://stackoverflow.com/questions/188887/how-to-access-as3-urlloader-return-data-on-ioerrorevent
 */
 package org.flails.request {
-
-  import mx.controls.Alert;
   
   import flash.events.*;
   import flash.net.*;
+  
+  import mx.controls.Alert;
   
   import com.adobe.serialization.json.*;
   
@@ -56,7 +56,6 @@ package org.flails.request {
     
     public function dispatch():Request {
       configureRequest();
-      addHandler(HTTP_STATUS, httpStatusHandler);
       
       this.loader.load(this.request);
       return this;
@@ -85,9 +84,14 @@ package org.flails.request {
     public function onComplete(completeHandler:Function):Request {      
       var completeHandlerProxy:Function = function(event:Event):void {
         var response:URLLoader = URLLoader(event.target);
-        var serializer:* = new JSONSerializer(response.data);
-        var serializedData:* = (resourceID == 0 && method != "POST") ? serializer.getList() : serializer.getFirst();
-
+        
+        if (response.data.replace(" ", "").length != 0) {
+          var serializer:* = new JSONSerializer(response.data);
+          var serializedData:* = (resourceID == 0 && method != "POST") ? serializer.getList() : serializer.getFirst();
+        } else {
+          var serailizedData:Boolean = true;
+        }
+        
         completeHandler.call(this, serializedData);
       }
       
@@ -101,7 +105,6 @@ package org.flails.request {
       
       var errorHandlerProxy:Function = function(event:Event):void {
         var response:URLLoader = URLLoader(event.target);
-        Alert.show(response.data);
 
         errorHandler.call(this, response.data);
       }
@@ -131,11 +134,6 @@ package org.flails.request {
         this.request.method = "POST";
         addHeader("Content-Type", "application/x-www-form-urlencoded");
       }
-    }
-    
-    private function httpStatusHandler(event:HTTPStatusEvent):void {
-      Alert.show("httpStatusHandler: " + event);
-      Alert.show("status: " + event.status);
     }
 
   }

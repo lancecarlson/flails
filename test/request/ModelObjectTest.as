@@ -6,23 +6,27 @@ package test.request {
   
   import flexunit.framework.TestCase;
   
+  import flash.utils.*;
+  
   public class ModelObjectTest extends TestCase {
-    
-/*    public function testGetBelongsToKeys():void {
-      var modelObject:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
-      var keys:Array = ModelObject.getBelongsToKeys(modelObject).sort();
+
+    public function testAttributes():void {
+      var modelAttributes:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
+      var modelObject:ModelObject = new ModelObject("post", modelAttributes);
       
-      assertEquals("account", keys[0]);
-      assertEquals("user", keys[1]);
-      assertEquals(2, keys.length);
-    }*/
+      assertEquals("This post is getting updated again", modelObject["body"]);
+      assertEquals("1", modelObject.id);
+      assertEquals("updated by testSave()", modelObject.subject);
+      assertEquals("1", modelObject.user_id);
+      assertEquals("2", modelObject.account_id);
+    }
     
 /*    public function testAssignBelongsToAssociations():void {
-      var modelObject:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
-      var newModelObject:Object = ModelObject.assignBelongsToAssociations(modelObject);
+      var modelAttributes:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
+      var modelObject:ModelObject = new ModelObject("post", modelAttributes);
       
-      assertEquals(2, newModelObject.account.id);
-      assertEquals(1, newModelObject.user.id);
+      assertEquals(2, modelObject.account.id);
+      assertEquals(1, modelObject.user.id);
     }*/
     
 /*    public function testSave():void {

@@ -7,7 +7,7 @@ package test.request {
   
   public class ModelTest extends TestCase {
     
-/*    public function testFindAll():void {
+    public function testFindAll():void {
       var remotePosts:Array = new Array;
       remotePosts[0] = {subject: "Getting removed"};
       remotePosts[1] = {subject: "Getting removed"};
@@ -30,7 +30,7 @@ package test.request {
       }).onError(function():void {
         Alert.show("something went wrong with testFindAll()");
       });
-    }*/
+    }
     
     public function testFindByID():void {
       const Post:Model = new Model("post");
@@ -41,7 +41,7 @@ package test.request {
       });
     }
     
-/*    public function testCreate():void {
+    public function testCreate():void {
       const Post:Model = new Model("post");
       Post.create({
         subject: "test123", 
@@ -54,22 +54,21 @@ package test.request {
       }).onError(function():void {
         Alert.show("something went wrong with testCreate()");
       });
-    }*/
+    }
     
-/*    public function testUpdate():void {
+    public function testUpdate():void {
       const Post:Model = new Model("post");
       Post.update(1, {
         subject: "This post was updated", 
         body: "Here is an existing post updated through Flails!"
-      }).onSuccess(function(post:*):void {
-        assertEquals("This post was updated", post.subject);
-        assertEquals("Here is an existing post updated through Flails!", post.body);
+      }).onSuccess(function():void {
+        Alert.show("updated!");
       }).onError(function():void {
         Alert.show("Darn");
       })
-    }*/
+    }
     
-/*    public function testDestroy():void {
+    public function testDestroy():void {
       const Post:Model = new Model("post");
       Post.create({
         subject: "Getting removed", 
@@ -87,7 +86,7 @@ package test.request {
       }).onError(function():void {
         Alert.show("darn!");
       });
-    }*/
+    }
     
   }
 }

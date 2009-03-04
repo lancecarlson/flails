@@ -5,39 +5,47 @@
 
 package org.flails.request {
   
-  import org.flails.request.Model;
-  
   import mx.controls.Alert;
   
-  public class ModelObject extends Object {
+  import org.flails.request.Model;
+  
+  dynamic public class ModelObject extends Object {
     
-    public static function create(json:Object):Object {
-      var type:String = findType(json);
-      var modelObject:Object = json[type];
+    public var type:String;
+    
+    public function ModelObject(type:String, attributes:Object=null) {
+      this.type = type;
       
-      modelObject = assignRequiredAttributes(modelObject, type);
-      modelObject = assignFunctions(modelObject);
-/*      modelObject = assignBelongsToAssociations(modelObject);*/
-
-      return modelObject;
-    }
-    
-    private static function assignRequiredAttributes(modelObject:Object, type:String):Object {
-      modelObject._type = type;
-      modelObject._model = new Model(type);
-      return modelObject;
-    }
-    
-    private static function assignFunctions(modelObject:Object):Object {
-      modelObject.save = function():Request {
-        return this._model.update(this.id, sanitizeObject(this));
+      if (attributes != null) {
+        setAttributes(attributes);
+        setBelongsToAssociations();
       }
-      return modelObject;
     }
     
-    public static function getBelongsToKeys(modelObject:Object):Array {
+    public function setAttributes(attributes:Object):void {
+      for(var key:String in attributes) {
+        this[key] = attributes[key];
+      }
+    }
+    
+    public function model():Model {
+      return new Model(type);
+    }
+    
+    public function save():Request {
+      return model().update(this.id, sanitized());
+    }
+    
+    private function sanitized():ModelObject {
+      var sanitizedModelObject:ModelObject = this;
+      delete sanitizedModelObject["id"];
+      deleteBelongsToAssociations(sanitizedModelObject);
+      return sanitizedModelObject;
+    }
+    
+    private function belongsToKeys():Array {
       var belongsToKeys:Array = new Array;
-      for (var key:String in modelObject) {
+      for (var key:String in this) {
         var matches:Array = key.match(/^(.*)_id$/);
         if (matches != null) {
           belongsToKeys.push(String(matches[1]));
@@ -46,39 +54,52 @@ package org.flails.request {
       return belongsToKeys;
     }
     
-    public static function assignBelongsToAssociations(modelObject:Object):Object {
-      getBelongsToKeys(modelObject).forEach(function(belongsToKey:String, index:int, array:Array):void {
-        modelObject[belongsToKey] = function():Request {
-          return new Model(belongsToKey).findByID(modelObject[belongsToKey + "_id"]);
+    private function setBelongsToAssociations():void {
+      belongsToKeys().forEach(function(belongsToKey:String, index:int, array:Array):void {
+        this[belongsToKey] = function():Request {
+          return new Model(belongsToKey).findByID(this[belongsToKey + "_id"]);
         }
       });
-      
-      return modelObject;
     }
     
-    public static function deleteBelongsToAssociations(modelObject:Object):Object {
-      getBelongsToKeys(modelObject).forEach(function(belongsToKey:String, index:int, array:Array):void {
+    
+    private function deleteBelongsToAssociations(modelObject:ModelObject):ModelObject {
+      belongsToKeys().forEach(function(belongsToKey:String, index:int, array:Array):void {
         delete modelObject[belongsToKey];
       });
-      
+
       return modelObject;
     }
     
-    private static function findType(json:Object):String {
-      for (var key:String in json) { var type:String = key; }
-      return key;
-    }
+
+
     
-    private static function sanitizeObject(unsanitized:Object):Object {
+/*    public static function create(json:Object):Object {
+      var type:String = findType(json);
+      var modelObject:Object = json[type];
+      
+      modelObject = assignRequiredAttributes(modelObject, type);
+      modelObject = assignFunctions(modelObject);
+      modelObject = assignBelongsToAssociations(modelObject);
+
+      return modelObject;
+    }*/
+     
+
+     
+
+
+
+/*    private static function sanitizeObject(unsanitized:Object):Object {
       delete unsanitized._type;
       delete unsanitized._model;
       delete unsanitized.save;
       
-/*      unsanitized = deleteBelongsToAssociations(unsanitized);*/
+      unsanitized = deleteBelongsToAssociations(unsanitized);
       
       return unsanitized;
     }
-    
+    */
 /*    private static function camelize(lowerCaseAndUnderscoredWord:String):String {
       var firstLetterLowerCase:String = lowerCaseAndUnderscoredWord.charAt(0).toLowerCase() + lowerCaseAndUnderscoredWord.slice(1);
       
