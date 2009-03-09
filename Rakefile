@@ -8,8 +8,16 @@ task :build do
   puts `#{cmd}`
 end
 
+task :server do
+  unless File.file?("rails/tmp/pids/mongrel.pid")
+    Dir.chdir "rails" do
+      `script/server -d`
+    end
+  end
+end
+
 desc "Test"
-task :test do
+task :test => :server do
   cmd = "mxmlc"
   cmd << " -source-path #{CURRENT_DIR}/src"
   cmd << " -output #{RAILS_DIR}/public/test/results.swf"
@@ -17,5 +25,5 @@ task :test do
   cmd << " -- #{CURRENT_DIR}/Test.mxml"
     
   puts `#{cmd}`
-  `open http://localhost:3000/test/results.swf`
+  `#{ENV['OPEN_BROWSER_CMD'] || 'open'} http://localhost:3000/test/results.swf`
 end
