@@ -7,13 +7,12 @@ package org.flails.request {
   
   import mx.controls.Alert;
   
-  import org.flails.request.Model;
+  import org.flails.request.Resource;
   
-  dynamic public class ModelObject extends Object {
-    
+  dynamic public class Record extends Object {
     public var type:String;
     
-    public function ModelObject(type:String, attributes:Object=null) {
+    public function Record(type:String, attributes:Object=null) {
       this.type = type;
       
       if (attributes != null) {
@@ -21,26 +20,26 @@ package org.flails.request {
         setBelongsToAssociations();
       }
     }
-    
+
     public function setAttributes(attributes:Object):void {
       for(var key:String in attributes) {
         this[key] = attributes[key];
       }
     }
     
-    public function model():Model {
-      return new Model(type);
+    public function resource():Resource {
+      return new Resource(type, this.constructor);
     }
     
     public function save():Request {
-      return model().update(this.id, sanitized());
+      return resource().update(this.id, sanitized());
     }
     
-    private function sanitized():ModelObject {
-      var sanitizedModelObject:ModelObject = this;
-      delete sanitizedModelObject["id"];
-      deleteBelongsToAssociations(sanitizedModelObject);
-      return sanitizedModelObject;
+    private function sanitized():Record {
+      var sanitizedRecord:Record = this;
+      delete sanitizedRecord["id"];
+      deleteBelongsToAssociations(sanitizedRecord);
+      return sanitizedRecord;
     }
     
     private function belongsToKeys():Array {
@@ -57,18 +56,18 @@ package org.flails.request {
     private function setBelongsToAssociations():void {
       belongsToKeys().forEach(function(belongsToKey:String, index:int, array:Array):void {
         this[belongsToKey] = function():Request {
-          return new Model(belongsToKey).findByID(this[belongsToKey + "_id"]);
+          return Resource.forName(belongsToKey).findByID(this[belongsToKey + "_id"]);
         }
       });
     }
     
     
-    private function deleteBelongsToAssociations(modelObject:ModelObject):ModelObject {
+    private function deleteBelongsToAssociations(record:Record):Record {
       belongsToKeys().forEach(function(belongsToKey:String, index:int, array:Array):void {
-        delete modelObject[belongsToKey];
+        delete record[belongsToKey];
       });
 
-      return modelObject;
+      return record;
     }
     
 
@@ -76,13 +75,13 @@ package org.flails.request {
     
 /*    public static function create(json:Object):Object {
       var type:String = findType(json);
-      var modelObject:Object = json[type];
+      var record:Object = json[type];
       
-      modelObject = assignRequiredAttributes(modelObject, type);
-      modelObject = assignFunctions(modelObject);
-      modelObject = assignBelongsToAssociations(modelObject);
+      record = assignRequiredAttributes(record, type);
+      record = assignFunctions(record);
+      record = assignBelongsToAssociations(record);
 
-      return modelObject;
+      return record;
     }*/
      
 

@@ -7,7 +7,7 @@ package org.flails.request {
   
   import com.adobe.serialization.json.*;
   import flash.events.*;
-  import org.flails.request.ModelObject;
+  import org.flails.request.Record;
   
   public class JSONSerializer {
     private var data:String;
@@ -28,11 +28,11 @@ package org.flails.request {
     
     public function serializeObject(object:Object, index:int=0, array:Array=null):Object {
       var type:String = findType(object);
-      var modelObject:ModelObject = new ModelObject(type);
+      var record:Record = new Record(type);
       
-      modelObject.setAttributes(object[type]);
+      record.setAttributes(object[type]);
       
-      return modelObject;
+      return record;
     }
     
     private static function findType(json:Object):String {

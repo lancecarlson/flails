@@ -13,8 +13,8 @@
 				var testSuite:TestSuite = new TestSuite();
 				
 				testSuite.addTestSuite(FlailsTest);
-				testSuite.addTestSuite(ModelObjectTest);
-				testSuite.addTestSuite(ModelTest);
+				testSuite.addTestSuite(RecordTest);
+				testSuite.addTestSuite(ResourceTest);
 /*				testSuite.addTestSuite(RequestTest);*/
 /*				testSuite.addTestSuite(RequestPathTest);*/
 				return testSuite;

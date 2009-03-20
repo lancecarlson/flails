@@ -5,7 +5,10 @@ package test.request {
   
   import flexunit.framework.TestCase;
   
-  public class ModelTest extends TestCase {
+  public class ResourceTest extends TestCase {
+    public function testInitializationWithClass():void {
+      assertEquals("post", Resource.forClass(Post).resourceName)
+    }
     
     public function testFindAll():void {
       var remotePosts:Array = new Array;
@@ -20,8 +23,8 @@ package test.request {
       remotePosts[8] = {subject: "My second post"};
       remotePosts[9] = {subject: "This post was updated"};
       
-      const Post:Model = new Model("post");
-      Post.findAll().onSuccess(function(posts:*):void {
+      const PostResource:Resource = Resource.forName("post");
+      PostResource.findAll().onSuccess(function(posts:*):void {
         var i:uint = 0;
         posts.forEach(function(post:*, index:int, array:Array):void {
           assertEquals(remotePosts[i].subject, post.subject);
@@ -33,8 +36,8 @@ package test.request {
     }
     
     public function testFindByID():void {
-      const Post:Model = new Model("post");
-      Post.findByID(1).onSuccess(function(post:*):void {
+      const PostResource:Resource = Resource.forName("post");
+      PostResource.findByID(1).onSuccess(function(post:*):void {
         assertEquals("This post was updated", post.subject);
       }).onError(function():void {
         Alert.show("something went wrong with testFindByID()");
@@ -42,8 +45,8 @@ package test.request {
     }
     
     public function testCreate():void {
-      const Post:Model = new Model("post");
-      Post.create({
+      const PostResource:Resource = Resource.forName("post");
+      PostResource.create({
         subject: "test123", 
         body: "Here is a new post created through Flails!", 
         user_id: 1}
@@ -57,8 +60,8 @@ package test.request {
     }
     
     public function testUpdate():void {
-      const Post:Model = new Model("post");
-      Post.update(1, {
+      const PostResource:Resource = Resource.forName("post");
+      PostResource.update(1, {
         subject: "This post was updated", 
         body: "Here is an existing post updated through Flails!"
       }).onSuccess(function(post:*):void {
@@ -70,15 +73,15 @@ package test.request {
     }
     
     public function testDestroy():void {
-      const Post:Model = new Model("post");
-      Post.create({
+      const PostResource:Resource = Resource.forName("post");
+      PostResource.create({
         subject: "Getting removed", 
         body: "This is getting removed", 
         user_id: 1}
       ).onSuccess(function(post:*):void {
         assertEquals("This is getting removed", post.body);
-        Post.destroy(post.id).onSuccess(function():void {
-          Post.findByID(post.id).onError(function():void {
+        PostResource.destroy(post.id).onSuccess(function():void {
+          PostResource.findByID(post.id).onError(function():void {
             Alert.show("woot");
           })
         }).onError(function():void {
@@ -88,6 +91,13 @@ package test.request {
         Alert.show("darn!");
       });
     }
-    
+  }
+}
+
+import org.flails.request.Record;
+
+class Post extends Record {
+  public function Post(resourceName:String, resourceClass:Class) {
+    super(resourceName, resourceClass);
   }
 }

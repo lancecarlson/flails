@@ -8,11 +8,10 @@ package test.request {
   
   import flash.utils.*;
   
-  public class ModelObjectTest extends TestCase {
-
+  public class RecordTest extends TestCase {
     public function testAttributes():void {
       var modelAttributes:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
-      var modelObject:ModelObject = new ModelObject("post", modelAttributes);
+      var modelObject:Record = new Record("post", modelAttributes);
       
       assertEquals("This post is getting updated again", modelObject["body"]);
       assertEquals("1", modelObject.id);
@@ -23,7 +22,7 @@ package test.request {
     
 /*    public function testAssignBelongsToAssociations():void {
       var modelAttributes:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
-      var modelObject:ModelObject = new ModelObject("post", modelAttributes);
+      var modelObject:Record = new Record("post", modelAttributes);
       
       assertEquals(2, modelObject.account.id);
       assertEquals(1, modelObject.user.id);
