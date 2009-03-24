@@ -90,6 +90,7 @@ package flails.request {
         variables["_method"] = method.toLowerCase();
       }
 
+      // replace this with filter.dump(params). Make ARSON filter take care of the resource[param] concatenation
       paramsToVariables(variables, params);
 
       request.data = variables;

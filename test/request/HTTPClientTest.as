@@ -31,7 +31,7 @@ package test.request {
           }, 1000));
       r.index();
     }
-5
+
     public function testFindById():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
@@ -42,7 +42,13 @@ package test.request {
           }, 1500));
       r.show(1);
     }
-    
+    /*
+    public function testCreate():void {
+      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
+      r.addEventListener("result", asyncHandler(verifyUpdateComplete, 1500));
+      r.create({post: {subject: "testFindAll #2 updated", body: "testFindAll #2 body updated"}});
+      }*/
+
     public function testUpdate():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(verifyUpdateComplete, 1500));
