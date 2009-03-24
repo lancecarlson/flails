@@ -9,13 +9,8 @@ package flails.request {
   import flails.request.Filter;
   
   public class ARSONFilter extends JSONFilter {
-    private var targetClass:Class;
     public function JSONFilter(targetClass:Class = null) {
-      if (targetClass) {
-        this.targetClass = targetClass;
-      } else {
-        this.targetClass = Record;
-      }
+      super(targetClass);
     }
     
     public function load(data:String):Object {
@@ -32,6 +27,10 @@ package flails.request {
       } else {
         return new targetClass(decoded);
       }
+    }
+
+    public function dump(data:Object):Object {
+      return null;
     }
   }
 }
