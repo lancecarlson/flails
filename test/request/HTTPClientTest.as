@@ -31,7 +31,7 @@ package test.request {
           }, 1000));
       r.index();
     }
-5
+
     public function testFindById():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {

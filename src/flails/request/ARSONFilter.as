@@ -8,7 +8,7 @@ package flails.request {
   import flails.request.Record;
   import flails.request.Filter;
   
-  public class JSONFilter implements Filter{
+  public class ARSONFilter extends JSONFilter {
     private var targetClass:Class;
     public function JSONFilter(targetClass:Class = null) {
       if (targetClass) {
@@ -32,10 +32,6 @@ package flails.request {
       } else {
         return new targetClass(decoded);
       }
-    }
-
-    public function dump(data:Object):Object {
-      return null;
     }
   }
 }
