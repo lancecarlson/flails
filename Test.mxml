@@ -1,32 +1,26 @@
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:flexui="flexunit.flexui.*" creationComplete="handleCreationComplete();">
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:fluint="http://www.digitalprimates.net/2008/fluint"
+	layout="absolute"
+	creationComplete="startTestProcess(event)"
+	width="100%" height="100%">
+	
 	<mx:Script>
 		<![CDATA[
-			import flexunit.framework.TestSuite;
+			import test.FrameworkSuite;
 			
-			import flails.Flails;
-			import flails.request.*;
-			
-			import test.*;
-			import test.request.*;
-			
-			private function createTestSuite():TestSuite {
-				var testSuite:TestSuite = new TestSuite();
+			protected function startTestProcess( event:Event ) : void
+			{
+				var suiteArray:Array = new Array();
+                                suiteArray.push( new FrameworkSuite() );
 				
-//				testSuite.addTestSuite(FlailsTest);
-//				testSuite.addTestSuite(RecordTest);
-//				testSuite.addTestSuite(ResourceTest);
-				testSuite.addTestSuite(HTTPClientTest);
-				testSuite.addTestSuite(JSONFilterTest);
-				testSuite.addTestSuite(ResourcePathBuilderTest);
-
-				return testSuite;
+				testRunner.startTests( suiteArray );
 			}
 			
-			private function handleCreationComplete():void {
-				testRunner.test = createTestSuite();
-				testRunner.startTest();
-			}
 		]]>
-	</mx:Script>
-	<flexui:TestRunnerBase id="testRunner" width="100%" height="100%"/>
+	</mx:Script>	
+	
+	<fluint:TestResultDisplay width="100%" height="100%" />
+	<fluint:TestRunner id="testRunner"/>
 </mx:Application>

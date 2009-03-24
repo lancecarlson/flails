@@ -6,16 +6,21 @@ package test.request {
   import flails.request.Record;
   import flails.request.ResourcePathBuilder;
   
-  import flexunit.framework.TestCase;
-  
+  import net.digitalprimates.fluint.tests.TestCase;
+
   public class HTTPClientTest extends TestCase {
-    override public function setUp():void {
-      new HTTPClient(null).doGet("/posts/reset");
+    private var r:HTTPClient;
+
+    override protected function setUp():void {
+      var cleanup:HTTPClient = new HTTPClient(null)
+      cleanup.addEventListener("result", asyncHandler(pendUntilComplete, 1000))
+      cleanup.doGet("/posts/reset");
+
+      r = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
     }
 
-    public function testFindAll():void {
-      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
-      r.addEventListener("result", addAsync(function (e:ResultEvent):void {
+    public function testIndex():void {
+      r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var a:Array = e.result as Array;
 
             assertEquals(2, a.length);
@@ -23,13 +28,13 @@ package test.request {
             assertEquals('testFindAll #1 body', a[0].body);
             assertEquals('testFindAll #2', a[1].subject);
             assertEquals('testFindAll #2 body', a[1].body);
-          }, 1500));
+          }, 1000));
       r.index();
     }
-
+5
     public function testFindById():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
-      r.addEventListener("result", addAsync(function (e:ResultEvent):void {
+      r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = e.result as Record;
 
             assertEquals('testFindAll #1', p.subject);
@@ -40,14 +45,14 @@ package test.request {
     
     public function testUpdate():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
-      r.addEventListener("result", addAsync(verifyUpdateComplete, 1500));
+      r.addEventListener("result", asyncHandler(verifyUpdateComplete, 1500));
       r.update(2, {post: {subject: "testFindAll #2 updated", body: "testFindAll #2 body updated"}});
     }
 
-    private function verifyUpdateComplete(e:ResultEvent):void {
+    private function verifyUpdateComplete(e:ResultEvent, data:Object):void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
 
-      r.addEventListener("result", addAsync(function (e:ResultEvent):void {
+      r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = e.result as Record;
 
             assertEquals('testFindAll #2 updated', p.subject);

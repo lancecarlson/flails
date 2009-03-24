@@ -4,14 +4,14 @@ package test.request {
   
   import flails.request.*;
   
-  import flexunit.framework.TestCase;
+  import net.digitalprimates.fluint.tests.TestCase;
   
   import flash.utils.*;
   
   public class RecordTest extends TestCase {
     public function testAttributes():void {
       var modelAttributes:Object = {body: "This post is getting updated again", id: 1, subject: "updated by testSave()", user_id: 1, account_id: 2}
-      var modelObject:Record = new Record("post", modelAttributes);
+      var modelObject:Record = new Record(modelAttributes);
       
       assertEquals("This post is getting updated again", modelObject["body"]);
       assertEquals("1", modelObject.id);

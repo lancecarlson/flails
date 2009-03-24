@@ -4,8 +4,8 @@
  */
 
 package flails.request {
-  import flails.request.Request;
-  import flails.request.HTTPRequest;
+  import flails.request.RequestPipe;
+  import flails.request.HTTPClient;
   import flails.request.Record;
   import flash.utils.getQualifiedClassName;
   
@@ -26,24 +26,9 @@ package flails.request {
       this.recordClass  = recordClass;
     }
     
-    public function finder():Request {
-      return request();
-    }
-    
-    public function creator():Request {
-      return request();
-    }
-    
-    public function updater():Request {
-      return request();
-    }
-    
-    public function destroyer():Request {
-      return request();
-    }
-    
-    private function request():Request {
-      return new HTTPRequest(resourceName);
+    public function requestPipe():RequestPipe {
+      // TODO: The pluralization obviously needs to be taken care of
+      return new HTTPClient(new ResourcePathBuilder(resourceName + "s"), new JSONFilter(recordClass));
     }
   }
 }

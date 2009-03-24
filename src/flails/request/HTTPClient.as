@@ -25,10 +25,11 @@ package flails.request {
 
   import flails.request.Filter;
   import flails.request.PathBuilder;
+  import flails.request.RequestPipe;
   
   //import com.adobe.serialization.json.*;
   
-  public class HTTPClient extends EventDispatcher {
+  public class HTTPClient extends EventDispatcher implements RequestPipe {
     private var loader:URLLoader = new URLLoader();
     private var request:URLRequest = new URLRequest();
     private var errorHandler:Function;

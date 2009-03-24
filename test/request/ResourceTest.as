@@ -1,43 +1,44 @@
 package test.request {
-  import mx.controls.Alert;
-  import flash.events.*;
-  import flails.request.*;
-  
-  import flexunit.framework.TestCase;
+  import net.digitalprimates.fluint.tests.TestCase;
+
+  import mx.rpc.events.ResultEvent;
+
+  import flails.request.HTTPClient;
+  import flails.request.RequestPipe;
+  import flails.request.Resource;
   
   public class ResourceTest extends TestCase {
     public function testInitializationWithClass():void {
       assertEquals("post", Resource.forClass(Post).resourceName)
     }
     
-    public function testFindAll():void {
+    public function testIndex():void {
       var remotePosts:Array = new Array;
-      remotePosts[0] = {subject: "Getting removed"};
-      remotePosts[1] = {subject: "Getting removed"};
-      remotePosts[2] = {subject: "Getting removed"};
-      remotePosts[3] = {subject: "Getting removed"};
-      remotePosts[4] = {subject: "Getting removed"};
-      remotePosts[5] = {subject: "Getting removed"};
-      remotePosts[6] = {subject: "test123"};
-      remotePosts[7] = {subject: "My third post"};
-      remotePosts[8] = {subject: "My second post"};
-      remotePosts[9] = {subject: "This post was updated"};
       
-      Request finder = Resource.forName("post").finder();
-      finder.addEventListener("result", addAsync(subjectsMatch, 1000));
+      var pipe:RequestPipe = Resource.forClass(Post).requestPipe();
+      pipe.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
+            var a:Array = e.result as Array;
 
-      finder.findAll();
+            assertEquals(2, a.length);
+            assertEquals(Post, a[0].constructor);
+            assertEquals(Post, a[1].constructor);
+      }, 1000));
+
+      pipe.index();
     }
 
-    private function subjectsMatch(posts:*):void {
-      var i:uint = 0;
+    public function testShow():void {
+      var remotePosts:Array = new Array;
       
-      posts.forEach(function(post:*, index:int, array:Array):void {
-          assertEquals(remotePosts[i].subject, post.subject);
-          i += 1;
-        });
+      var pipe:RequestPipe = Resource.forClass(Post).requestPipe();
+      pipe.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
+            var p:Post = e.result as Post;
+      }, 1000));
+
+      pipe.show(1);
     }
-    
+
+    /*
     public function testFindByID():void {
       Request finder = Resource.forName("post").finder();
       finder.addEventListener("result", addAsync(subjectMatches, 1000));
@@ -83,14 +84,14 @@ package test.request {
     private var postDeleted(post:*):void {
       assertEquals("This post was updated", post.subject);
       assertEquals("Here is an existing post updated through Flails!", post.body);
-    }
+      }*/
   }
 }
 
 import flails.request.Record;
 
-class Post extends Record {
-  public function Post(resourceName:String, resourceClass:Class) {
-    super(resourceName, resourceClass);
+dynamic class Post extends Record {
+  public function Post(attributes:Object) {
+    super(attributes);
   }
 }

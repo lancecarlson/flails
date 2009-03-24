@@ -1,5 +1,5 @@
 package test.request {
-  import flexunit.framework.TestCase;
+  import net.digitalprimates.fluint.tests.TestCase;
   import flails.request.ResourcePathBuilder;
   
   public class ResourcePathBuilderTest extends TestCase {

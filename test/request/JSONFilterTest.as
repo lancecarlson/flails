@@ -4,8 +4,8 @@ package test.request {
   import flails.request.JSONFilter;
   import flails.request.Record;
   
-  import flexunit.framework.TestCase;
-  
+  import net.digitalprimates.fluint.tests.TestCase;
+
   public class JSONFilterTest extends TestCase {
     public function testLoadResultList():void {
       var f:JSONFilter = new JSONFilter();
