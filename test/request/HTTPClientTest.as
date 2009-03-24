@@ -43,6 +43,24 @@ package test.request {
       r.show(1);
     }
     
+    public function testCreate():void {
+      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
+      r.addEventListener("result", asyncHandler(verifyCreateComplete, 1500));
+      r.create({post: {subject: "creating new post", body: "creating new post with body"}});
+    }
+    
+    private function verifyCreateComplete(e:ResultEvent, data:Object):void {
+      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
+      
+      r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
+        var p:Record = e.result as Record;
+
+        assertEquals('testFindAll #2 updated', p.subject);
+        assertEquals('testFindAll #2 body updated', p.body);
+      }, 1500));
+      r.show(2);
+    }
+    
     public function testUpdate():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(verifyUpdateComplete, 1500));
