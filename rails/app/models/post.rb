@@ -12,5 +12,9 @@
 #
 
 class Post < ActiveRecord::Base
-  validates_presence_of :subject, :body, :user_id
+  validates_presence_of :subject, :body
+
+  def id=(id)
+    write_attribute(:id, id);
+  end
 end

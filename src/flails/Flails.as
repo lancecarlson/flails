@@ -3,7 +3,7 @@
  * See LICENSE for full license information.
  */
  
-package org.flails {
+package flails {
   
   public class Flails {
 /*    public var request:FlailsRequest;

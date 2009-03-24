@@ -3,8 +3,8 @@
 		<![CDATA[
 			import flexunit.framework.TestSuite;
 			
-			import org.flails.Flails;
-			import org.flails.request.*;
+			import flails.Flails;
+			import flails.request.*;
 			
 			import test.*;
 			import test.request.*;
@@ -12,11 +12,13 @@
 			private function createTestSuite():TestSuite {
 				var testSuite:TestSuite = new TestSuite();
 				
-				testSuite.addTestSuite(FlailsTest);
-				testSuite.addTestSuite(RecordTest);
-				testSuite.addTestSuite(ResourceTest);
-/*				testSuite.addTestSuite(RequestTest);*/
-/*				testSuite.addTestSuite(RequestPathTest);*/
+//				testSuite.addTestSuite(FlailsTest);
+//				testSuite.addTestSuite(RecordTest);
+//				testSuite.addTestSuite(ResourceTest);
+				testSuite.addTestSuite(HTTPClientTest);
+				testSuite.addTestSuite(JSONFilterTest);
+				testSuite.addTestSuite(ResourcePathBuilderTest);
+
 				return testSuite;
 			}
 			

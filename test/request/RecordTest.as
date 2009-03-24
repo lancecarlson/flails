@@ -2,7 +2,7 @@ package test.request {
   
   import mx.controls.Alert;
   
-  import org.flails.request.*;
+  import flails.request.*;
   
   import flexunit.framework.TestCase;
   

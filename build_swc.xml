@@ -11,13 +11,15 @@
   </compiler>
   <include-classes>
 
-      <class>org.flails.Flails</class>
+      <!--class>flails.Flails</class>
 			
-			<class>org.flails.request.ModelObject</class>
-      <class>org.flails.request.JSONSerializer</class>
-      <class>org.flails.request.Model</class>
-      <class>org.flails.request.Request</class>
-      <class>org.flails.request.RequestPath</class>
+      <class>flails.request.JSONSerializer</class>
+      <class>flails.request.Resource</class>
+      <class>flails.request.Request</class-->
+      <class>flails.request.HTTPClient</class>
+      <class>flails.request.Record</class>
+      <class>flails.request.JSONFilter</class>
+      <class>flails.request.ResourcePathBuilder</class>
  
   </include-classes>
   <metadata>

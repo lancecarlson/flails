@@ -3,7 +3,7 @@
  * See LICENSE for full license information.
  */
  
-package org.flails.request {
+package flails.request {
   public class RequestPath {
     
     public var host:String = "";

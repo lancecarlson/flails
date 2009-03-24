@@ -1,5 +1,17 @@
 class PostsController < ApplicationController
-  before_filter :find_post, :except => [:index, :create]
+  def reset
+    Post.delete_all
+
+    p1 = Post.new(:subject => 'testFindAll #1', :body => 'testFindAll #1 body')
+    p1.id = 1
+    p1.save!
+
+    p2 = Post.new(:subject => 'testFindAll #2', :body => 'testFindAll #2 body')
+    p2.id = 2
+    p2.save!
+
+    render :nothing => true
+  end
   
   def index
     @posts = Post.find(:all, :limit => 10)
@@ -11,7 +23,7 @@ class PostsController < ApplicationController
   
   def show
     respond_to do |format|
-      format.json { render :json => @post }
+      format.json { render :json => current_post }
     end
   end
   
@@ -29,7 +41,7 @@ class PostsController < ApplicationController
   
   def update
     respond_to do |format|
-      if @post.update_attributes(params[:post])
+      if current_post.update_attributes(params[:post])
         format.json { render :json => @post }
       else
         format.json { render :json => @post.errors, :status => :unprocessable_entity }
@@ -39,7 +51,7 @@ class PostsController < ApplicationController
   
   def destroy
     respond_to do |format|
-      if @post.destroy
+      if current_post.destroy
         format.json { render :json => @post }
       else
         format.json { render :json => @post.errors }
@@ -49,7 +61,7 @@ class PostsController < ApplicationController
   
   private
     
-    def find_post
-      @post = Post.find(params[:id])
-    end
+  def current_post
+    @post ||= Post.find(params[:id])
+  end
 end

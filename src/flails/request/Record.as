@@ -3,21 +3,15 @@
  * See LICENSE for full license information.
  */
 
-package org.flails.request {
+package flails.request {
   
-  import mx.controls.Alert;
-  
-  import org.flails.request.Resource;
+//import flails.request.Resource;
   
   dynamic public class Record extends Object {
-    public var type:String;
-    
-    public function Record(type:String, attributes:Object=null) {
-      this.type = type;
-      
+    public function Record(attributes:Object=null) {
       if (attributes != null) {
         setAttributes(attributes);
-        setBelongsToAssociations();
+        //setBelongsToAssociations();
       }
     }
 
@@ -27,9 +21,9 @@ package org.flails.request {
       }
     }
     
-    public function resource():Resource {
+    /*    public function resource():Resource {
       return new Resource(type, this.constructor);
-    }
+      }
     
     public function save():Request {
       return resource().update(this.id, sanitized());
@@ -69,7 +63,7 @@ package org.flails.request {
 
       return record;
     }
-    
+    */
 
 
     

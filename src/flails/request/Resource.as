@@ -3,9 +3,10 @@
  * See LICENSE for full license information.
  */
 
-package org.flails.request {
-  import org.flails.request.Request;
-  import org.flails.request.Record;
+package flails.request {
+  import flails.request.Request;
+  import flails.request.HTTPRequest;
+  import flails.request.Record;
   import flash.utils.getQualifiedClassName;
   
   public class Resource {
@@ -25,41 +26,24 @@ package org.flails.request {
       this.recordClass  = recordClass;
     }
     
-    public function findAll():Request {
-      return newRequest().dispatch();
+    public function finder():Request {
+      return request();
     }
     
-    public function findByID(id:uint):Request {
-      var request:Request = newRequest();
-      request.resourceID = id;
-      return request.dispatch();
+    public function creator():Request {
+      return request();
     }
     
-    public function create(attributes:Object):Request {
-      var request:Request = newRequest();
-      request.method = "POST";
-      request.pushParams(attributes);
-      return request.dispatch();
+    public function updater():Request {
+      return request();
     }
     
-    public function update(id:uint, attributes:Object):Request {
-      var request:Request = newRequest();
-      request.resourceID = id;
-      request.method = "PUT";
-      request.pushParams(attributes);
-      return request.dispatch();
+    public function destroyer():Request {
+      return request();
     }
     
-    public function destroy(id:uint):Request {
-      var request:Request = newRequest();
-      request.resourceID = id;
-      request.method = "DELETE";
-      request.pushParams({});
-      return request.dispatch();
-    }
-    
-    private function newRequest():Request {
-      return new Request(resourceName);
+    private function request():Request {
+      return new HTTPRequest(resourceName);
     }
   }
 }
