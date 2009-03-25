@@ -1,5 +1,6 @@
 CURRENT_DIR = File.dirname(__FILE__)
 RAILS_DIR = File.join(CURRENT_DIR, "rails")
+TEST_SWF = "#{RAILS_DIR}/public/test/results.swf"
 SWC_DIR = File.join(CURRENT_DIR, "swc")
 
 namespace :rails do
@@ -32,13 +33,20 @@ namespace :compile do
   task :tests do
     cmd = "mxmlc"
     cmd << " -source-path #{CURRENT_DIR}/src"
-    cmd << " -output #{RAILS_DIR}/public/test/results.swf"
+    cmd << " -output #{TEST_SWF}"
     cmd << " -library-path+=#{SWC_DIR}"
     cmd << " -- #{CURRENT_DIR}/Test.mxml"
     
     system(cmd)
   end
 end
+
+desc "Delete artifacts"
+task :clean do
+  FileUtils.rm_rf('pkg')
+  FileUtils.rm_f(TEST_SWF)
+end
+
 
 desc "Build swc file"
 task :build => 'compile:component'
