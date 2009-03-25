@@ -11,11 +11,8 @@
   </compiler>
   <include-classes>
 
-      <!--class>flails.Flails</class>
-			
-      <class>flails.request.JSONSerializer</class>
       <class>flails.request.Resource</class>
-      <class>flails.request.Request</class-->
+      <class>flails.request.RequestPipe</class>
       <class>flails.request.HTTPClient</class>
       <class>flails.request.Record</class>
       <class>flails.request.JSONFilter</class>
