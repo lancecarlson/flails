@@ -27,6 +27,8 @@ package flails.request {
   import flails.request.PathBuilder;
   import flails.request.RequestPipe;
   
+  import mx.controls.Alert;
+  
   //import com.adobe.serialization.json.*;
   
   public class HTTPClient extends EventDispatcher implements RequestPipe {
@@ -60,15 +62,6 @@ package flails.request {
       this.filter      = filter;
     }
     
-    public function doGet(url:String):void {
-      addHeader("Content-Type", "application/json");
-
-      request.url = url;
-
-      loader.addEventListener("complete", onComplete);
-      loader.load(request);
-    }
-    
     public function index():void {
       doGet(pathBuilder.index());
     }
@@ -76,11 +69,23 @@ package flails.request {
     public function show(id:Number):void {
       doGet(pathBuilder.show(id));
     }
+    
+    public function create(data:Object):void {
+      pushParams(data, "POST");
+      
+      doPost(pathBuilder.create());
+    }
 
     public function update(id:Number, data:Object):void {
       pushParams(data, "PUT");
 
       doPost(pathBuilder.update(id));
+    }
+    
+    public function destroy(id:Number):void {
+      pushParams({}, "DELETE");
+      
+      doPost(pathBuilder.destroy(id));
     }
 
     private function pushParams(params:Object, method:String):void {
@@ -116,7 +121,7 @@ package flails.request {
 
     private function onComplete(event:Event):void {      
       var response:URLLoader = URLLoader(event.target);
-        
+      
       if (response.data.replace(" ", "").length != 0) {
         dispatchEvent(new ResultEvent("result", false, false, filter.load(response.data)));
       } else {
@@ -126,6 +131,15 @@ package flails.request {
 
     private function addHeader(name:String, value:String):void {
       request.requestHeaders.push(new URLRequestHeader(name, value));
+    }
+    
+    public function doGet(url:String):void {
+      addHeader("Content-Type", "application/json");
+
+      request.url = url;
+      
+      loader.addEventListener("complete", onComplete);
+      loader.load(request);
     }
 
     private function doPost(url:String):void {

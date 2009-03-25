@@ -32,7 +32,7 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       if @post.save
-        format.json { render :json => @post, :status => :created }
+        format.json { render :json => @post }
       else
         format.json { render :json => @post.errors, :status => :unprocessable_entity }
       end
@@ -63,5 +63,7 @@ class PostsController < ApplicationController
     
   def current_post
     @post ||= Post.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    @post = Post.new
   end
 end

@@ -7,7 +7,7 @@ package flails.request {
     
     function update(id:Number, data:Object):void;
     
-    //function create():void;
+    function create(data:Object):void;
     
     //function destroy(id:Number):void;
   }
