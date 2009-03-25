@@ -142,7 +142,7 @@ package flails.request {
       loader.load(request);
     }
 
-    private function doPost(url:String):void {
+    public function doPost(url:String):void {
       addHeader("Content-Type", "application/x-www-form-urlencoded");
 
       request.method = "POST";
