@@ -3,9 +3,9 @@
  * See LICENSE for full license information.
  */
 
-package flails.request {
+package flails.resource {
   
-//import flails.request.Resource;
+//import flails.resource.Resource;
   
   dynamic public class Record extends Object {
     public function Record(attributes:Object=null) {

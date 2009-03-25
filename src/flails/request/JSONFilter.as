@@ -5,7 +5,7 @@
  
 package flails.request {
   import com.adobe.serialization.json.*;
-  import flails.request.Record;
+  import flails.resource.Record;
   import flails.request.Filter;
   
   public class JSONFilter implements Filter{

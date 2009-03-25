@@ -1,5 +1,6 @@
 package test {
   import test.request.*
+  import test.resource.*
   import net.digitalprimates.fluint.tests.TestSuite;
 
   public class FrameworkSuite extends TestSuite {

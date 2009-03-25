@@ -3,10 +3,12 @@
  * See LICENSE for full license information.
  */
 
-package flails.request {
+package flails.resource {
   import flails.request.RequestPipe;
   import flails.request.HTTPClient;
-  import flails.request.Record;
+  import flails.request.ResourcePathBuilder;
+  import flails.request.JSONFilter;
+
   import flash.utils.getQualifiedClassName;
   
   public class Resource {

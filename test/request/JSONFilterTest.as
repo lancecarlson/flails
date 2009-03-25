@@ -2,7 +2,7 @@ package test.request {
   import mx.rpc.events.ResultEvent;
 
   import flails.request.JSONFilter;
-  import flails.request.Record;
+  import flails.resource.Record;
   
   import net.digitalprimates.fluint.tests.TestCase;
 
@@ -50,7 +50,7 @@ package test.request {
   }
 }
 
-import flails.request.Record;
+import flails.resource.Record;
 
 dynamic class Post extends Record {
   public function Post(attributes:Object = null) {

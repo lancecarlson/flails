@@ -1,11 +1,11 @@
-package test.request {
+package test.resource {
   import net.digitalprimates.fluint.tests.TestCase;
 
   import mx.rpc.events.ResultEvent;
 
   import flails.request.HTTPClient;
   import flails.request.RequestPipe;
-  import flails.request.Resource;
+  import flails.resource.Resource;
   
   public class ResourceTest extends TestCase {
     public function testInitializationWithClass():void {
@@ -88,7 +88,7 @@ package test.request {
   }
 }
 
-import flails.request.Record;
+import flails.resource.Record;
 
 dynamic class Post extends Record {
   public function Post(attributes:Object) {

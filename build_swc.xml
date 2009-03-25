@@ -11,10 +11,10 @@
   </compiler>
   <include-classes>
 
-      <class>flails.request.Resource</class>
+      <class>flails.resource.Resource</class>
+      <class>flails.resource.Record</class>
       <class>flails.request.RequestPipe</class>
       <class>flails.request.HTTPClient</class>
-      <class>flails.request.Record</class>
       <class>flails.request.JSONFilter</class>
       <class>flails.request.ResourcePathBuilder</class>
  

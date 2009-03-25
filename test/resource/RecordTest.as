@@ -1,8 +1,8 @@
-package test.request {
+package test.resource {
   
   import mx.controls.Alert;
   
-  import flails.request.*;
+  import flails.resource.Record;
   
   import net.digitalprimates.fluint.tests.TestCase;
   

@@ -3,7 +3,7 @@ package test.request {
 
   import flails.request.HTTPClient;
   import flails.request.JSONFilter;
-  import flails.request.Record;
+  import flails.resource.Record;
   import flails.request.ResourcePathBuilder;
   import mx.controls.Alert;
   
