@@ -28,9 +28,21 @@ package flails.resource {
       this.recordClass  = recordClass;
     }
     
-    public function requestPipe():RequestPipe {
+    public function index(resultHandler:Function, errorHandler:Function = null):void {
+      requestPipe(resultHandler, errorHandler).index();
+    }
+
+    public function show(id:Number, resultHandler:Function, errorHandler:Function = null):void {
+      requestPipe(resultHandler, errorHandler).show(id);
+    }
+
+    public function requestPipe(resultHandler:Function, errorHandler:Function):RequestPipe {
       // TODO: The pluralization obviously needs to be taken care of
-      return new HTTPClient(new ResourcePathBuilder(resourceName + "s"), new JSONFilter(recordClass));
+      var pipe:RequestPipe = new HTTPClient(new ResourcePathBuilder(resourceName + "s"), new JSONFilter(recordClass));
+
+      pipe.addEventListener("result", resultHandler);
+
+      return pipe;
     }
   }
 }

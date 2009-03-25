@@ -15,27 +15,21 @@ package test.resource {
     public function testIndex():void {
       var remotePosts:Array = new Array;
       
-      var pipe:RequestPipe = Resource.forClass(Post).requestPipe();
-      pipe.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
+      Resource.forClass(Post).index(asyncHandler(function (e:ResultEvent, data:Object):void {
             var a:Array = e.result as Array;
-
+            
             assertEquals(2, a.length);
             assertEquals(Post, a[0].constructor);
             assertEquals(Post, a[1].constructor);
-      }, 1000));
-
-      pipe.index();
+          }, 1000));
     }
 
     public function testShow():void {
       var remotePosts:Array = new Array;
       
-      var pipe:RequestPipe = Resource.forClass(Post).requestPipe();
-      pipe.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
+      Resource.forClass(Post).show(1, asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Post = e.result as Post;
-      }, 1000));
-
-      pipe.show(1);
+          }, 1000));
     }
 
     /*
