@@ -8,7 +8,7 @@ namespace :rails do
   task :start do
     unless File.file?("rails/log/mongrel.pid")
       Dir.chdir "rails" do
-        system("mongrel_rails start -d")
+        sh "mongrel_rails start -d"
       end
     end
   end
@@ -17,7 +17,7 @@ namespace :rails do
   task :stop do
     if File.file?("rails/log/mongrel.pid")
       Dir.chdir "rails" do
-        system("mongrel_rails stop")
+        sh "mongrel_rails stop"
       end
     end
   end
@@ -26,7 +26,7 @@ end
 namespace :compile do
   desc "Compile component"
   task :component do
-    system("compc -load-config=#{CURRENT_DIR}/build_swc.xml")
+    sh "compc -load-config=#{CURRENT_DIR}/build_swc.xml"
   end
   
   desc "Compile tests"
@@ -37,9 +37,10 @@ namespace :compile do
     cmd << " -library-path+=#{SWC_DIR}"
     cmd << " -- #{CURRENT_DIR}/Test.mxml"
     
-    system(cmd)
+    sh cmd
   end
 end
+
 
 desc "Delete artifacts"
 task :clean do
@@ -53,5 +54,5 @@ task :build => 'compile:component'
 
 desc "Run tests"
 task :test => ['rails:start', 'compile:tests'] do
-  system("open http://localhost:3000/test/results.swf")
+  sh "open http://localhost:3000/test/results.swf"
 end
