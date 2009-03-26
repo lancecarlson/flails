@@ -8,14 +8,18 @@ package test.resource {
   import flails.resource.Resource;
   
   public class ResourceTest extends TestCase {
-    public function testInitializationWithClass():void {
-      assertEquals("post", Resource.forClass(Post).name)
+    public var r:Resource;
+
+    override protected function setUp():void {
+      r = new Resource();
+      r.name = "posts";
+      r.instanceClass = Post;
     }
-    
+
     public function testIndex():void {
       var remotePosts:Array = new Array;
       
-      Resource.forClass(Post).index(asyncHandler(function (e:ResultEvent, data:Object):void {
+      r.index(asyncHandler(function (e:ResultEvent, data:Object):void {
             var a:Array = e.result as Array;
             
             assertEquals(2, a.length);
@@ -27,7 +31,7 @@ package test.resource {
     public function testShow():void {
       var remotePosts:Array = new Array;
       
-      Resource.forClass(Post).show(1, asyncHandler(function (e:ResultEvent, data:Object):void {
+      r.show(1, asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Post = e.result as Post;
           }, 1000));
     }

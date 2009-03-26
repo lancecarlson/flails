@@ -14,25 +14,14 @@ package flails.resource {
   import mx.core.IMXMLObject;
 
   public class Resource {
-    public static function forName(name:String):Resource {
-      return new Resource(name, Record);
-    }
-
-    public static function forClass(recordClass:Class):Resource {
-      return new Resource(getQualifiedClassName(recordClass).split("::")[1].toLowerCase(), recordClass);
-    }
-
     public var name:String;
-    public var recordClass:Class;
+    public var instanceClass:Class;
+    
+    public function Resource() {}
     
     public function initialized(parent:Object, id:String):void {
     }
 
-    public function Resource(name:String = null, recordClass:Class = null) {
-      this.name = name;
-      this.recordClass  = recordClass;
-    }
-    
     public function index(resultHandler:Function, errorHandler:Function = null):void {
       requestPipe(resultHandler, errorHandler).index();
     }
@@ -43,7 +32,7 @@ package flails.resource {
 
     public function requestPipe(resultHandler:Function, errorHandler:Function):RequestPipe {
       // TODO: The pluralization obviously needs to be taken care of
-      var pipe:RequestPipe = new HTTPClient(new ResourcePathBuilder(name + "s"), new JSONFilter(recordClass));
+      var pipe:RequestPipe = new HTTPClient(new ResourcePathBuilder(name), new JSONFilter(instanceClass));
 
       pipe.addEventListener("result", resultHandler);
 
