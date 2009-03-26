@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentPackage>
+<component id="Resources" class="flails.resource.Resources"/>
+<component id="Resource" class="flails.resource.Resource"/>
+</componentPackage>

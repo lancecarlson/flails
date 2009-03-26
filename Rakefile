@@ -26,7 +26,7 @@ end
 namespace :compile do
   desc "Compile component"
   task :component do
-    sh "compc -load-config=#{CURRENT_DIR}/build_swc.xml"
+    sh "compc -load-config=#{CURRENT_DIR}/build_swc.xml -include-namespaces=\"http://github.com/lancecarlson/flails\" -namespace \"http://github.com/lancecarlson/flails\" manifest.xml"
   end
   
   desc "Compile tests"
