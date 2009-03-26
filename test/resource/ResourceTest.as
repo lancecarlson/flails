@@ -9,7 +9,7 @@ package test.resource {
   
   public class ResourceTest extends TestCase {
     public function testInitializationWithClass():void {
-      assertEquals("post", Resource.forClass(Post).resourceName)
+      assertEquals("post", Resource.forClass(Post).name)
     }
     
     public function testIndex():void {

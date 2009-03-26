@@ -11,6 +11,7 @@
   </compiler>
   <include-classes>
 
+      <class>flails.resource.Resources</class>
       <class>flails.resource.Resource</class>
       <class>flails.resource.Record</class>
       <class>flails.request.RequestPipe</class>
