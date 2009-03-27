@@ -14,6 +14,7 @@ package test.resource {
       r = new Resource();
       r.name = "posts";
       r.instanceClass = Post;
+      r.initialized(null, null);
     }
 
     public function testIndex():void {
