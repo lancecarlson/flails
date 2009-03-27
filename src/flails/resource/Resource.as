@@ -9,17 +9,17 @@ package flails.resource {
   import flails.request.ResourcePathBuilder;
   import flails.request.JSONFilter;
 
-  import flash.utils.getQualifiedClassName;
-  
   import mx.core.IMXMLObject;
 
-  public class Resource {
+  public class Resource implements IMXMLObject {
     public var name:String;
     public var instanceClass:Class;
     
     public function Resource() {}
     
     public function initialized(parent:Object, id:String):void {
+      if (name == null) throw new Error("Name not set for resource.");
+      if (instanceClass == null) instanceClass = Record;
     }
 
     public function index(resultHandler:Function, errorHandler:Function = null):void {
