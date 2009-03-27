@@ -2,9 +2,8 @@ package flails.resource {
   import mx.core.IMXMLObject;
   import flash.utils.Dictionary;
 
+  [DefaultProperty("resources")]
   public class Resources implements IMXMLObject {
-    [DefaultProperty("resources")]
-
     private static var _resources:Dictionary = new Dictionary();
 
     public static function getResource(name:String):Resource {
