@@ -8,8 +8,11 @@ package test {
       addTestCase(new ResourcePathBuilderTest());
       addTestCase(new HTTPClientTest());
       addTestCase(new JSONFilterTest());
+      addTestCase(new IdentityFilterTest());
       addTestCase(new ResourceTest());
+      addTestCase(new ResourceInstantiationTest());
       addTestCase(new RecordTest());
+      addTestCase(new ResourceJavaScriptBuilderTest());
     }
   }
 }

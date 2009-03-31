@@ -8,9 +8,9 @@ package flails.request {
   import flails.resource.Record;
   import flails.request.Filter;
   
-  public class JSONFilter implements Filter{
+  public class IdentityFilter implements Filter{
     private var targetClass:Class;
-    public function JSONFilter(targetClass:Class = null) {
+    public function IdentityFilter(targetClass:Class = null) {
       if (targetClass) {
         this.targetClass = targetClass;
       } else {
@@ -19,18 +19,20 @@ package flails.request {
     }
     
     public function load(data:Object):Object {
-      var decoded:Object = JSON.decode(data as String);
+      if (data != null) {
+        if (data is Array) {
+          var result:Array = [];
 
-      if (decoded is Array) {
-        var a:Array = [];
+          for each (var o:Object in data) {
+            result.push(new targetClass(o));
+          }
 
-        for each(var o:Object in decoded) {
-          a.push(new targetClass(o));
+          return result;
+        } else {
+          return new targetClass(data);
         }
-
-        return a;
       } else {
-        return new targetClass(decoded);
+        return null;
       }
     }
 

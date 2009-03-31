@@ -146,32 +146,8 @@ package flails.request {
       request.method = "POST";
       request.url = url;
 
-      trace(url);
-
       loader.addEventListener("complete", onComplete);
       loader.load(request);
     }
-
-    /*
-    public function onError(errorHandler:Function):void {
-      this.errorHandler = errorHandler;
-      
-      var errorHandlerProxy:Function = function(event:Event):void {
-        var response:URLLoader = URLLoader(event.target);
-
-        errorHandler.call(this, response.data);
-      }
-      
-      addHandler("ioError", errorHandlerProxy);
-    }
-    
-    private function requestPath(mime:String=null):RequestPath {
-      return new RequestPath(this.resource, null, this.resourceID, mime);
-    }
-    
-    private function addHandler(handlerType:String, handlerFunction:Function):void {
-      this.loader.addEventListener(handlerType, handlerFunction);
-    }
-    */
   }
 }

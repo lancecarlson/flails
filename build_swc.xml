@@ -16,8 +16,11 @@
       <class>flails.resource.Record</class>
       <class>flails.request.RequestPipe</class>
       <class>flails.request.HTTPClient</class>
-      <class>flails.request.JSONFilter</class>
       <class>flails.request.ResourcePathBuilder</class>
+      <class>flails.request.JavaScriptClient</class>
+      <class>flails.request.ResourceJavaScriptBuilder</class>
+      <class>flails.request.JSONFilter</class>
+      <class>flails.request.IdentityFilter</class>
  
   </include-classes>
   <metadata>

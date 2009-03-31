@@ -5,35 +5,33 @@
 
 package flails.resource {
   import flails.request.RequestPipe;
+  import flails.request.Filter;
   import flails.request.HTTPClient;
+  import flails.request.JavaScriptClient;
   import flails.request.ResourcePathBuilder;
+  import flails.request.ResourceJavaScriptBuilder;
   import flails.request.JSONFilter;
+  import flails.request.IdentityFilter;
 
   import mx.core.IMXMLObject;
 
   public class Resource implements IMXMLObject {
     private var requestPipeConstructor:Function;
-    private var _requestAdapter:String;
 
     public var name:String;
     public var instanceClass:Class;
+    public var requestAdapter:String;
+    public var requestFilter:String;
     
     public function Resource() {}
     
-    public function set requestAdapter(type:String):void {
-      switch (type) {
-      case "http":
-        requestPipeConstructor = function():RequestPipe {
-          return new HTTPClient(new ResourcePathBuilder(name), new JSONFilter(instanceClass));
-        }
-        break
-      }
-    }
-
     public function initialized(parent:Object, id:String):void {
       if (name == null) throw new Error("Name not set for resource.");
       if (instanceClass == null) instanceClass = Record;
-      if (_requestAdapter == null) requestAdapter = "http";
+      if (requestFilter == null) requestFilter = "json";
+
+      if (requestAdapter == null) requestAdapter = "http";
+      requestPipeConstructor = buildRequestPipeConstructor(requestAdapter, buildRequestFilter(requestFilter));
     }
 
     public function index(resultHandler:Function, errorHandler:Function = null):void {
@@ -41,16 +39,45 @@ package flails.resource {
     }
 
     public function show(id:Number, resultHandler:Function, errorHandler:Function = null):void {
+      trace("in Resource.show");
+
       requestPipe(resultHandler, errorHandler).show(id);
     }
 
     public function requestPipe(resultHandler:Function, errorHandler:Function):RequestPipe {
-      // TODO: The pluralization obviously needs to be taken care of
       var pipe:RequestPipe = requestPipeConstructor.call();
+
+      trace("adding event handler");
 
       pipe.addEventListener("result", resultHandler);
 
       return pipe;
+    }
+
+    private function buildRequestFilter(type:String):Filter {
+      switch (type) {
+      case "json":
+        return new JSONFilter(instanceClass);
+      case "identity":
+        return new IdentityFilter(instanceClass);
+      default:
+        throw new Error("No valid request filter found for param " + type);
+      }
+    }
+
+    private function buildRequestPipeConstructor(adapter:String, filter:Filter):Function {
+      switch (adapter) {
+      case "js":
+        return function():RequestPipe {
+          return new JavaScriptClient(new ResourceJavaScriptBuilder(name), filter);
+        }
+      case "http":
+        return function():RequestPipe {
+          return new HTTPClient(new ResourcePathBuilder(name), filter);
+        }
+      default:
+        throw new Error("No valid request adapter found for param " + adapter);
+      }
     }
   }
 }
