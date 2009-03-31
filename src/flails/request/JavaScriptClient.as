@@ -29,7 +29,6 @@ package flails.request {
     }
     
     public function show(id:Number):void {
-      trace("in JavaScriptClient.show");
       trace("adding callback " + pathBuilder.show(id) + "Result");
       ExternalInterface.addCallback(pathBuilder.show(id) + "Result", onShowResponse);
 
@@ -50,7 +49,7 @@ package flails.request {
       // ...
     }
 
-    private function onShowResponse(data:String):void {
+    private function onShowResponse(data:Object):void {
       trace("called back with data: " + data);
       dispatchEvent(new ResultEvent("result", false, false, filter.load(data)));
     }
