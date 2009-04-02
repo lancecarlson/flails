@@ -5,9 +5,9 @@
 
 package flails.resource {
   
-//import flails.resource.Resource;
+  import flash.events.EventDispatcher;
   
-  dynamic public class Record extends Object {
+  dynamic public class Record extends EventDispatcher {
     public function Record(attributes:Object=null) {
       trace("initializing Record with attributes " + attributes)
       

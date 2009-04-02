@@ -38,6 +38,7 @@ package flails.request {
 
     private var pathBuilder:PathBuilder;
     private var filter:Filter;
+    private var config:RequestConfig;
     
     // Dispatched after all the received data is decoded and placed in the data property of the URLLoader object. The received data may be accessed once this event has been dispatched.
     public const COMPLETE:String = "complete";
@@ -57,44 +58,57 @@ package flails.request {
     // Dispatched if a call to URLLoader.load() attempts to load data from a server outside the security sandbox.
     public const SECURITY_ERROR:String = "securityError";
     
-    public function HTTPClient(pathBuilder:PathBuilder, filter:Filter = null) {
+    public function HTTPClient(pathBuilder:PathBuilder, filter:Filter, config:RequestConfig) {
       this.pathBuilder = pathBuilder;
       this.filter      = filter;
+      this.config      = config;
     }
     
     public function index():void {
       trace("entered index");
 
+      configureRequest({}, "GET");
+
       doGet(pathBuilder.index());
     }
     
     public function show(id:Object = null):void {
+      configureRequest({}, "GET");
+
       doGet(pathBuilder.show(id));
     }
     
     public function create(data:Object):void {
-      pushParams(data, "POST");
+      configureRequest(data, "POST");
       
       doPost(pathBuilder.create());
     }
 
-    public function update(data:Object, id:Object):void {
-      pushParams(data, "PUT");
+    public function update(data:Object, id:Object = null):void {
+      configureRequest(data, "PUT");
 
       doPost(pathBuilder.update(id));
     }
     
     public function destroy(id:Object):void {
-      pushParams({}, "DELETE");
+      configureRequest({}, "DELETE");
       
       doPost(pathBuilder.destroy(id));
     }
 
-    private function pushParams(params:Object, method:String):void {
+    private function configureRequest(params:Object, method:String):void {
+      trace("configuring...")
       var variables:URLVariables = new URLVariables();
       
+      // TODO: This is rails specific. Move it somewhere more appropriate
       if (method == "PUT" || method == "DELETE") {
         variables["_method"] = method.toLowerCase();
+      }
+
+      trace("Adding " + config.extraParams.length + " extra variables");
+      for each (var p:RequestParam in config.extraParams) {
+        trace("adding extra var " + p.name + " with value " + p.value); 
+        variables[p.name] = p.value;
       }
 
       // replace this with filter.dump(params). Make ARSON filter take care of the resource[param] concatenation
@@ -136,19 +150,24 @@ package flails.request {
     }
     
     public function doGet(url:String):void {
+      trace("entering doGet");
+      // TODO: This should be set by the filter
       addHeader("Content-Type", "application/json");
 
-      request.url = url;
+      trace("setting url " + config.baseUrl + url);
+      request.url = config.baseUrl + url;
       
       loader.addEventListener("complete", onComplete);
       loader.load(request);
     }
 
     public function doPost(url:String):void {
+      trace("entering doPost");
       addHeader("Content-Type", "application/x-www-form-urlencoded");
 
       request.method = "POST";
-      request.url = url;
+      trace("setting url " + config.baseUrl + url);
+      request.url = config.baseUrl + url;
 
       loader.addEventListener("complete", onComplete);
       loader.load(request);

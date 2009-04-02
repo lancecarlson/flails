@@ -2,6 +2,7 @@
 <componentPackage>
   <component id="Resources" class="flails.resource.Resources"/>
   <component id="RequestConfig" class="flails.request.RequestConfig"/>
+  <component id="RequestParam" class="flails.request.RequestParam"/>
   <component id="Resource" class="flails.resource.Resource"/>
   <component id="Request" class="flails.mxml.Request"/>
 </componentPackage>

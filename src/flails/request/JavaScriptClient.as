@@ -11,15 +11,13 @@ package flails.request {
 
   import mx.rpc.events.ResultEvent;
 
-  //import com.adobe.serialization.json.*;
-  
   public class JavaScriptClient extends EventDispatcher implements RequestPipe {
     private var errorHandler:Function;
 
     private var pathBuilder:PathBuilder;
     private var filter:Filter;
     
-    public function JavaScriptClient(pathBuilder:PathBuilder, filter:Filter = null) {
+    public function JavaScriptClient(pathBuilder:PathBuilder, filter:Filter) {
       this.pathBuilder = pathBuilder;
       this.filter      = filter;
     }

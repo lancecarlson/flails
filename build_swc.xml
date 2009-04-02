@@ -16,6 +16,7 @@
       <class>flails.resource.Record</class>
       <class>flails.request.RequestPipe</class>
       <class>flails.request.RequestConfig</class>
+      <class>flails.request.RequestParam</class>
       <class>flails.request.HTTPClient</class>
       <class>flails.request.ResourcePathBuilder</class>
       <class>flails.request.JavaScriptClient</class>

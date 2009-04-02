@@ -12,30 +12,41 @@ package flails.resource {
   import flails.request.ResourceJavaScriptBuilder;
   import flails.request.JSONFilter;
   import flails.request.IdentityFilter;
+  import flails.request.RequestConfig;
 
   import mx.core.IMXMLObject;
 
   public class Resource implements IMXMLObject {
     private var requestPipeConstructor:Function;
 
+
     public var name:String;
     public var instanceClass:Class;
     public var requestAdapter:String;
     public var requestFilter:String;
+    public var requestConfig:RequestConfig;
     
     public function Resource() {}
     
     public function initialized(parent:Object, id:String):void {
       if (name == null) throw new Error("Name not set for resource.");
-      if (instanceClass == null) instanceClass = Record;
-      if (requestFilter == null) requestFilter = "json";
 
+      trace("initialized resource " + name);
+
+      if (instanceClass == null) instanceClass = Record;
+
+      if (requestFilter == null) requestFilter = "json";
       if (requestAdapter == null) requestAdapter = "http";
+
+      if (requestConfig == null) requestConfig = new RequestConfig();
+
       requestPipeConstructor = buildRequestPipeConstructor(requestAdapter, buildRequestFilter(requestFilter));
     }
 
     public function newRequestPipe():RequestPipe {
-      return requestPipeConstructor.call();
+      trace("creating new request pipe");
+      trace("requestConfig is " + requestConfig);
+      return requestPipeConstructor(requestConfig);
     }
 
     private function buildRequestFilter(type:String):Filter {
@@ -52,12 +63,12 @@ package flails.resource {
     private function buildRequestPipeConstructor(adapter:String, filter:Filter):Function {
       switch (adapter) {
       case "js":
-        return function():RequestPipe {
+        return function(config:RequestConfig):RequestPipe {
           return new JavaScriptClient(new ResourceJavaScriptBuilder(name), filter);
         }
       case "http":
-        return function():RequestPipe {
-          return new HTTPClient(new ResourcePathBuilder(name), filter);
+        return function(config:RequestConfig):RequestPipe {
+          return new HTTPClient(new ResourcePathBuilder(name), filter, config);
         }
       default:
         throw new Error("No valid request adapter found for param " + adapter);

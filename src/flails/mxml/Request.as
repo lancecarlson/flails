@@ -15,6 +15,8 @@ package flails.mxml {
     public var data:Object;
     public var targetId:Object;
     public var type:String;
+    public var id:String;
+    public var parent:Object;
 
     [Bindable] public var result:Object;
 
@@ -25,6 +27,8 @@ package flails.mxml {
     }
 
     public function initialized(parent:Object, id:String):void {
+      this.parent = parent;
+      this.id = id;
     }
 
     public function send():void {
