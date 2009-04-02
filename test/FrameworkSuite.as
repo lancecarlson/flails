@@ -1,6 +1,7 @@
 package test {
   import test.request.*
   import test.resource.*
+  import test.mxml.*
   import net.digitalprimates.fluint.tests.TestSuite;
 
   public class FrameworkSuite extends TestSuite {
@@ -9,7 +10,7 @@ package test {
       addTestCase(new HTTPClientTest());
       addTestCase(new JSONFilterTest());
       addTestCase(new IdentityFilterTest());
-      addTestCase(new ResourceTest());
+      addTestCase(new RequestTest());
       addTestCase(new ResourceInstantiationTest());
       addTestCase(new RecordTest());
       addTestCase(new ResourceJavaScriptBuilderTest());

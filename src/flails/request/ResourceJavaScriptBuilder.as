@@ -15,11 +15,11 @@ package flails.request {
       return pluralResource + "Index";
     }
     
-    public function show(id:Number):String {
+    public function show(id:Object = null):String {
       return pluralResource + "Show";
     }
     
-    public function update(id:Number):String {
+    public function update(id:Object = null):String {
       return pluralResource + "Update";
     }
     
@@ -27,7 +27,7 @@ package flails.request {
       return pluralResource + "Create";
     }
     
-    public function destroy(id:Number):String {
+    public function destroy(id:Object = null):String {
       return pluralResource + "Destroy";
     }
   }

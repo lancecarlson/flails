@@ -34,24 +34,8 @@ package flails.resource {
       requestPipeConstructor = buildRequestPipeConstructor(requestAdapter, buildRequestFilter(requestFilter));
     }
 
-    public function index(resultHandler:Function, errorHandler:Function = null):void {
-      requestPipe(resultHandler, errorHandler).index();
-    }
-
-    public function show(id:Number, resultHandler:Function, errorHandler:Function = null):void {
-      trace("in Resource.show");
-
-      requestPipe(resultHandler, errorHandler).show(id);
-    }
-
-    public function requestPipe(resultHandler:Function, errorHandler:Function):RequestPipe {
-      var pipe:RequestPipe = requestPipeConstructor.call();
-
-      trace("adding event handler");
-
-      pipe.addEventListener("result", resultHandler);
-
-      return pipe;
+    public function newRequestPipe():RequestPipe {
+      return requestPipeConstructor.call();
     }
 
     private function buildRequestFilter(type:String):Filter {

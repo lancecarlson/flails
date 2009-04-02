@@ -4,7 +4,6 @@
  */
  
 package flails.request {
-  import com.adobe.serialization.json.*;
   import flails.resource.Record;
   import flails.request.Filter;
   

@@ -19,23 +19,23 @@ package flails.request {
       return resourcesUrl();
     }
     
-    public function show(id:Number):String {
-      return resourcesUrl(id.toString());
+    public function show(id:Object = null):String {
+      return resourcesUrl(id && id.toString());
     }
     
-    public function update(id:Number):String {
-      return resourcesUrl(id.toString());
+    public function update(id:Object = null):String {
+      return resourcesUrl(id && id.toString());
     }
     
     public function create():String {
       return resourcesUrl();
     }
     
-    public function destroy(id:Number):String {
+    public function destroy(id:Object = null):String {
       return resourcesUrl(id.toString());
     }
 
-    private function resourcesUrl(more:String = null):String {
+    private function resourcesUrl(more:Object = null):String {
       var base:String = host + "/" + pluralResource; 
 
       if (more) {

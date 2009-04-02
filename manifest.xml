@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <componentPackage>
-<component id="Resources" class="flails.resource.Resources"/>
-<component id="Resource" class="flails.resource.Resource"/>
+  <component id="Resources" class="flails.resource.Resources"/>
+  <component id="RequestConfig" class="flails.request.RequestConfig"/>
+  <component id="Resource" class="flails.resource.Resource"/>
+  <component id="Request" class="flails.mxml.Request"/>
 </componentPackage>

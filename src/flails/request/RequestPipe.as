@@ -3,9 +3,9 @@ package flails.request {
   public interface RequestPipe extends IEventDispatcher {
     function index():void;
     
-    function show(id:Number):void;
+    function show(id:Object = null):void;
     
-    function update(id:Number, data:Object):void;
+    function update(data:Object, id:Object = null):void;
     
     function create(data:Object):void;
     

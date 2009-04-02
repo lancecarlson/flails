@@ -61,10 +61,12 @@ package flails.request {
     }
     
     public function index():void {
+      trace("entered index");
+
       doGet(pathBuilder.index());
     }
     
-    public function show(id:Number):void {
+    public function show(id:Object = null):void {
       doGet(pathBuilder.show(id));
     }
     
@@ -74,13 +76,13 @@ package flails.request {
       doPost(pathBuilder.create());
     }
 
-    public function update(id:Number, data:Object):void {
+    public function update(data:Object, id:Object = null):void {
       pushParams(data, "PUT");
 
       doPost(pathBuilder.update(id));
     }
     
-    public function destroy(id:Number):void {
+    public function destroy(id:Object):void {
       pushParams({}, "DELETE");
       
       doPost(pathBuilder.destroy(id));

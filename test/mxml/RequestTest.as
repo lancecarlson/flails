@@ -1,40 +1,63 @@
-package test.resource {
+package test.mxml {
   import net.digitalprimates.fluint.tests.TestCase;
 
-  import mx.rpc.events.ResultEvent;
+  import mx.events.PropertyChangeEvent;
 
-  import flails.request.HTTPClient;
-  import flails.request.RequestPipe;
+  import flails.resource.Record;
   import flails.resource.Resource;
+  import flails.resource.Resources;
+  import flails.mxml.Request;
   
-  public class ResourceTest extends TestCase {
-    public var r:Resource;
+  public class RequestTest extends TestCase {
+    public var r:Request;
+    public var resources:Resources;
+    public var resource:Resource;
 
     override protected function setUp():void {
-      r = new Resource();
-      r.name = "posts";
-      r.instanceClass = Post;
-      r.initialized(null, null);
+      resource = new Resource();
+      resource.name = "posts";
+      resource.initialized(null, null);
+
+      resources = new Resources();
+      resources.resources = [resource];
+      resources.initialized(null, null);
+
+      r = new Request();
+      r.resourceName = "posts"
     }
 
     public function testIndex():void {
+      r.type = "index";
+      r.initialized(null, null);
+
       var remotePosts:Array = new Array;
       
-      r.index(asyncHandler(function (e:ResultEvent, data:Object):void {
-            var a:Array = e.result as Array;
+      r.addEventListener("propertyChange", asyncHandler(function (e:PropertyChangeEvent, data:Object):void {
+            var a:Array = e.newValue as Array;
             
             assertEquals(2, a.length);
-            assertEquals(Post, a[0].constructor);
-            assertEquals(Post, a[1].constructor);
-          }, 1000));
+            assertEquals(Record, a[0].constructor);
+            assertEquals(Record, a[1].constructor);
+          }, 5000));
+
+      r.send();
     }
 
     public function testShow():void {
+      r.type = "show";
+      r.targetId = 1;
+      r.initialized(null, null);
+
       var remotePosts:Array = new Array;
       
-      r.show(1, asyncHandler(function (e:ResultEvent, data:Object):void {
-            var p:Post = e.result as Post;
+      r.addEventListener("propertyChange", asyncHandler(function (e:PropertyChangeEvent, data:Object):void {
+            var r:Record = e.newValue as Record;
+
+            assertEquals(r.subject, "testFindAll #1");
+            assertEquals(r.body, "testFindAll #1 body");
           }, 1000));
+
+      r.send();
     }
 
     /*
@@ -84,13 +107,5 @@ package test.resource {
       assertEquals("This post was updated", post.subject);
       assertEquals("Here is an existing post updated through Flails!", post.body);
       }*/
-  }
-}
-
-import flails.resource.Record;
-
-dynamic class Post extends Record {
-  public function Post(attributes:Object) {
-    super(attributes);
   }
 }

@@ -26,7 +26,9 @@ end
 namespace :compile do
   desc "Compile component"
   task :component do
-    sh "compc -load-config=#{CURRENT_DIR}/build_swc.xml -include-namespaces=\"http://github.com/lancecarlson/flails\" -namespace \"http://github.com/lancecarlson/flails\" manifest.xml"
+    sh "compc -load-config+=build_swc.xml \
+              -include-namespaces=\"http://github.com/lancecarlson/flails\" \
+              -namespace \"http://github.com/lancecarlson/flails\" manifest.xml"
   end
   
   desc "Compile tests"
@@ -52,7 +54,12 @@ end
 desc "Build swc file"
 task :build => 'compile:component'
 
+namespace :test do
+  desc "Run tests and view results"
+  task :open => :test do
+    sh "open http://localhost:3000/test/results.swf"
+  end
+end       
+
 desc "Run tests"
-task :test => ['rails:start', 'compile:tests'] do
-  sh "open http://localhost:3000/test/results.swf"
-end
+task :test => ['rails:start', 'compile:tests']

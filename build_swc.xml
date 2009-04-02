@@ -1,33 +1,35 @@
+<?xml version="1.0"?>
 <flex-config>
   <compiler>
-    <external-library-path>
-      <path-element>${flexlib}/libs/player/9/playerglobal.swc</path-element>
-      <path-element>swc/as3corelib.swc</path-element>
+    <external-library-path append="true">
+      <path-element>swc</path-element>
     </external-library-path>
     
     <source-path>
       <path-element>src</path-element>
     </source-path>
   </compiler>
-  <include-classes>
 
+  <include-classes>
       <class>flails.resource.Resources</class>
       <class>flails.resource.Resource</class>
       <class>flails.resource.Record</class>
       <class>flails.request.RequestPipe</class>
+      <class>flails.request.RequestConfig</class>
       <class>flails.request.HTTPClient</class>
       <class>flails.request.ResourcePathBuilder</class>
       <class>flails.request.JavaScriptClient</class>
       <class>flails.request.ResourceJavaScriptBuilder</class>
       <class>flails.request.JSONFilter</class>
       <class>flails.request.IdentityFilter</class>
- 
   </include-classes>
+
   <metadata>
     <creator>Lance Carlson</creator>
     <description>http://github.com/lancecarlson/flails</description>
     <language>EN</language>
     <title>Flex + Rails framework</title>
   </metadata>
+
   <output>pkg/flails-0.1.swc</output>
 </flex-config>

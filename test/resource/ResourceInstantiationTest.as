@@ -18,7 +18,7 @@ package test.resource {
     public function testJSAdapterSet():void {
       r.requestAdapter = "js"
       r.initialized(null, null);
-      JavaScriptClient(r.requestPipe(function ():void {}, null));
+      JavaScriptClient(r.newRequestPipe());
     }
 
     /*
