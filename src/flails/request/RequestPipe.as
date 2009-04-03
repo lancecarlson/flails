@@ -5,10 +5,10 @@ package flails.request {
     
     function show(id:Object = null):void;
     
-    function update(data:Object, id:Object = null):void;
+    function update(id:Object, data:Object):void;
     
     function create(data:Object):void;
     
-    //function destroy(id:Number):void;
+    function destroy(id:Object):void;
   }
 }

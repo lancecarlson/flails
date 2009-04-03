@@ -6,14 +6,14 @@ package test {
 
   public class FrameworkSuite extends TestSuite {
     public function FrameworkSuite() {
-      addTestCase(new ResourcePathBuilderTest());
+/*      addTestCase(new ResourcePathBuilderTest());*/
       addTestCase(new HTTPClientTest());
-      addTestCase(new JSONFilterTest());
-      addTestCase(new IdentityFilterTest());
-      addTestCase(new RequestTest());
-      addTestCase(new ResourceInstantiationTest());
-      addTestCase(new RecordTest());
-      addTestCase(new ResourceJavaScriptBuilderTest());
+/*      addTestCase(new JSONFilterTest());*/
+/*      addTestCase(new IdentityFilterTest());*/
+/*      addTestCase(new RequestTest());*/
+/*      addTestCase(new ResourceInstantiationTest());*/
+/*      addTestCase(new RecordTest());*/
+/*      addTestCase(new ResourceJavaScriptBuilderTest());*/
     }
   }
 }

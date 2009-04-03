@@ -33,7 +33,7 @@ package test.request {
       r.index();
     }
 
-    public function testFindById():void {
+    public function testShow():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = e.result as Record;
@@ -42,6 +42,16 @@ package test.request {
             assertEquals('testFindAll #1 body', p.body);
           }, 1500));
       r.show(1);
+    }
+    
+    public function testShowNotFound():void {
+      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
+      r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
+            var p:Record = e.result as Record;
+
+            assertEquals('Can\'t find record', p.message);
+          }, 1500));
+      r.show(2349324920);
     }
     
     public function testCreate():void {

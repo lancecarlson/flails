@@ -18,12 +18,19 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       format.json { render :json => @posts }
+      format.amf { render :amf => @posts }
     end
   end
   
   def show
     respond_to do |format|
-      format.json { render :json => current_post }
+      if current_post.is_a?(Post)
+        format.json { render :json => current_post }
+        format.amf { render :amf => current_post }
+      else        
+        format.json { render :json => current_post.errors }
+        format.amf { render :amf => current_post.errors }
+      end
     end
   end
   
@@ -33,18 +40,22 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         format.json { render :json => @post }
+        format.amf { render :amf => @post }
       else
-        format.json { render :json => @post.errors, :status => :unprocessable_entity }
+        format.json { render :json => @post.errors }
+        format.amf { render :amf => @post.errors }
       end
     end
   end
   
   def update
     respond_to do |format|
-      if current_post.update_attributes(params[:post])
+      if current_post.is_a?(Post) && current_post.update_attributes(params[:post])
         format.json { render :json => @post }
+        format.amf { render :amf => @post }
       else
-        format.json { render :json => @post.errors, :status => :unprocessable_entity }
+        format.json { render :json => @post.errors }
+        format.amf { render :amf => @post.errors }
       end
     end
   end
@@ -53,8 +64,10 @@ class PostsController < ApplicationController
     respond_to do |format|
       if current_post.destroy
         format.json { render :json => @post }
+        format.amf { render :amf => @post }
       else
         format.json { render :json => @post.errors }
+        format.amf { render :amf => @post.errors }
       end
     end
   end
@@ -64,6 +77,10 @@ class PostsController < ApplicationController
   def current_post
     @post ||= Post.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    @post = Post.new
+    logger.info("Can't find record")
+    @post = Object.new
+    def @post.errors
+      FaultObject.new(:message => "Can't find record")
+    end
   end
 end

@@ -13,84 +13,42 @@ Check this for details:
 http://stackoverflow.com/questions/188887/how-to-access-as3-urlloader-return-data-on-ioerrorevent
 */
 package flails.request {
-  import flash.events.EventDispatcher;
-  import flash.events.Event;
-
-  import flash.net.URLLoader;
-  import flash.net.URLRequest;
-  import flash.net.URLRequestHeader;
-  import flash.net.URLVariables;
-
-  import mx.rpc.events.ResultEvent;
-
-  import flails.request.Filter;
-  import flails.request.PathBuilder;
-  import flails.request.RequestPipe;
   
-  import mx.controls.Alert;
-  
-  //import com.adobe.serialization.json.*;
-  
-  public class HTTPClient extends EventDispatcher implements RequestPipe {
-    private var loader:URLLoader = new URLLoader();
-    private var request:URLRequest = new URLRequest();
-    private var errorHandler:Function;
-
-    private var pathBuilder:PathBuilder;
-    private var filter:Filter;
-    
-    // Dispatched after all the received data is decoded and placed in the data property of the URLLoader object. The received data may be accessed once this event has been dispatched.
-    public const COMPLETE:String = "complete";
-    
-    // Dispatched when the download operation commences following a call to the URLLoader.load() method.
-    public const OPEN:String = "open";
-    
-    // Dispatched when data is received as the download operation progresses.
-    public const PROGRESS:String = "progress"; 
-    
-    // Dispatched if a call to URLLoader.load() attempts to access data over HTTP and the current Flash Player environment is able to detect and return the status code for the request.
-    public const HTTP_STATUS:String = "httpStatus";
-    
-    // Dispatched if a call to URLLoader.load() results in a fatal error that terminates the download.
-    public const IO_ERROR:String = "ioError";
-    
-    // Dispatched if a call to URLLoader.load() attempts to load data from a server outside the security sandbox.
-    public const SECURITY_ERROR:String = "securityError";
+  public class RemoteClient extends EventDispatcher implements RequestPipe {
     
     public function HTTPClient(pathBuilder:PathBuilder, filter:Filter = null) {
-      this.pathBuilder = pathBuilder;
-      this.filter      = filter;
+
     }
     
     public function index():void {
       trace("entered index");
 
-      doGet(pathBuilder.index());
+/*      doGet(pathBuilder.index());*/
     }
     
     public function show(id:Object = null):void {
-      doGet(pathBuilder.show(id));
+/*      doGet(pathBuilder.show(id));*/
     }
     
     public function create(data:Object):void {
       pushParams(data, "POST");
       
-      doPost(pathBuilder.create());
+/*      doPost(pathBuilder.create());*/
     }
 
-    public function update(id:Object, data:Object):void {
+    public function update(data:Object, id:Object = null):void {
       pushParams(data, "PUT");
 
-      doPost(pathBuilder.update(id));
+/*      doPost(pathBuilder.update(id));*/
     }
     
     public function destroy(id:Object):void {
       pushParams({}, "DELETE");
       
-      doPost(pathBuilder.destroy(id));
+/*      doPost(pathBuilder.destroy(id));*/
     }
 
-    private function pushParams(params:Object, method:String):void {
+/*    private function pushParams(params:Object, method:String):void {
       var variables:URLVariables = new URLVariables();
       
       if (method == "PUT" || method == "DELETE") {
@@ -152,6 +110,6 @@ package flails.request {
 
       loader.addEventListener("complete", onComplete);
       loader.load(request);
-    }
+    }*/
   }
 }
