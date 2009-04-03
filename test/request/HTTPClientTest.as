@@ -49,7 +49,7 @@ package test.request {
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = e.result as Record;
 
-            assertEquals('Can\'t find record', p.message);
+            assertEquals('Record Not Found', p.message);
           }, 1500));
       r.show(2349324920);
     }

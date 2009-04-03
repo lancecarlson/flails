@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  
   def reset
     Post.delete_all
 
@@ -23,64 +24,53 @@ class PostsController < ApplicationController
   end
   
   def show
+    begin
+      @post = Post.find(params[:id])
+    rescue ActiveRecord::RecordNotFound 
+      @post = FaultObject.new("Record Not Found")
+    end
+    
     respond_to do |format|
-      if current_post.is_a?(Post)
-        format.json { render :json => current_post }
-        format.amf { render :amf => current_post }
-      else        
-        format.json { render :json => current_post.errors }
-        format.amf { render :amf => current_post.errors }
-      end
+      format.json { render :json => @post }
+      format.amf { render :amf => @post }
     end
   end
   
   def create
     @post = Post.new(params[:post])
+    @post = FaultObject.new(@post.errors) if !@post.save
     
     respond_to do |format|
-      if @post.save
-        format.json { render :json => @post }
-        format.amf { render :amf => @post }
-      else
-        format.json { render :json => @post.errors }
-        format.amf { render :amf => @post.errors }
-      end
+      format.json { render :json => @post }
+      format.amf { render :amf => @post }
     end
   end
   
   def update
+    begin
+      @post = Post.find(params[:id])
+      @post = FaultObject.new(@post.errors) if !@post.update_attributes(params[:post])
+    rescue ActiveRecord::RecordNotFound
+      @post = FaultObject.new("Record Not Found")
+    end
+    
     respond_to do |format|
-      if current_post.is_a?(Post) && current_post.update_attributes(params[:post])
-        format.json { render :json => @post }
-        format.amf { render :amf => @post }
-      else
-        format.json { render :json => @post.errors }
-        format.amf { render :amf => @post.errors }
-      end
+      format.json { render :json => @post }
+      format.amf { render :amf => @post }
     end
   end
   
   def destroy
-    respond_to do |format|
-      if current_post.destroy
-        format.json { render :json => @post }
-        format.amf { render :amf => @post }
-      else
-        format.json { render :json => @post.errors }
-        format.amf { render :amf => @post.errors }
-      end
+    begin
+      @post = Post.find(params[:id])
+      @post = FaultObject.new(@post.errors) if !@post.destroy
+    rescue ActiveRecord::RecordNotFound
+      @post = FaultObject.new("Record Not Found")
     end
-  end
-  
-  private
     
-  def current_post
-    @post ||= Post.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    logger.info("Can't find record")
-    @post = Object.new
-    def @post.errors
-      FaultObject.new(:message => "Can't find record")
+    respond_to do |format|
+      format.json { render :json => @post }
+      format.amf { render :amf => @post }
     end
   end
 end
