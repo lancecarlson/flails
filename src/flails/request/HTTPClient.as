@@ -72,13 +72,13 @@ package flails.request {
       doGet(pathBuilder.show(id));
     }
     
-    public function create(data:Object):void {
+    public function create(data:Object, id:Object = null):void {
       pushParams(data, "POST");
       
       doPost(pathBuilder.create());
     }
 
-    public function update(id:Object, data:Object):void {
+    public function update(data:Object, id:Object):void {
       pushParams(data, "PUT");
 
       doPost(pathBuilder.update(id));

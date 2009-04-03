@@ -14,38 +14,50 @@ http://stackoverflow.com/questions/188887/how-to-access-as3-urlloader-return-dat
 */
 package flails.request {
   
+  import flash.events.EventDispatcher;
+  import flash.events.Event;
+  
+  import mx.rpc.remoting.RemoteObject;
+  import mx.rpc.events.ResultEvent;
+  
+  import flails.request.PathBuilder;
+  
+  import mx.controls.Alert;
+  
   public class RemoteClient extends EventDispatcher implements RequestPipe {
+    public var data:Object;
+    private var pathBuilder:PathBuilder;
     
-    public function HTTPClient(pathBuilder:PathBuilder, filter:Filter = null) {
-
+    public function RemoteClient(pathBuilder:PathBuilder, filter:Filter = null) {
+      this.pathBuilder = pathBuilder;
     }
     
     public function index():void {
       trace("entered index");
-
-/*      doGet(pathBuilder.index());*/
+      
+      doRemote(pathBuilder.index());
     }
     
     public function show(id:Object = null):void {
-/*      doGet(pathBuilder.show(id));*/
+      doRemote(pathBuilder.show(id));
     }
     
-    public function create(data:Object):void {
-      pushParams(data, "POST");
+    public function create(data:Object, id:Object = null):void {
+/*      pushParams(data, "POST");*/
       
-/*      doPost(pathBuilder.create());*/
+      doRemote(pathBuilder.create());
     }
 
-    public function update(data:Object, id:Object = null):void {
-      pushParams(data, "PUT");
+    public function update(data:Object, id:Object):void {
+/*      pushParams(data, "PUT");*/
 
-/*      doPost(pathBuilder.update(id));*/
+      doRemote(pathBuilder.update(id));
     }
     
     public function destroy(id:Object):void {
-      pushParams({}, "DELETE");
+/*      pushParams({}, "DELETE");*/
       
-/*      doPost(pathBuilder.destroy(id));*/
+      doRemote(pathBuilder.destroy(id));
     }
 
 /*    private function pushParams(params:Object, method:String):void {
@@ -100,16 +112,18 @@ package flails.request {
       
       loader.addEventListener("complete", onComplete);
       loader.load(request);
-    }
-
-    public function doPost(url:String):void {
-      addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      request.method = "POST";
-      request.url = url;
-
-      loader.addEventListener("complete", onComplete);
-      loader.load(request);
     }*/
+    
+    public function doRemote(url:String):void {
+      var remoteObject:RemoteObject = new RemoteObject;
+      remoteObject.endpoint = "http://localhost:3000/rubyamf_gateway";
+      remoteObject.source = "PostsController";
+      remoteObject.destination = "rubyamf";
+      remoteObject.index();
+      remoteObject.addEventListener("result", function():void {
+        Alert.show("test");
+      })
+      remoteObject.index();
+    }
   }
 }

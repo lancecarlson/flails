@@ -76,7 +76,7 @@ package test.request {
     public function testUpdate():void {
       var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(verifyUpdateComplete, 1500));
-      r.update(2, {post: {subject: "testFindAll #2 updated", body: "testFindAll #2 body updated"}});
+      r.update({post: {subject: "testFindAll #2 updated", body: "testFindAll #2 body updated"}}, 2);
     }
 
     private function verifyUpdateComplete(e:ResultEvent, data:Object):void {

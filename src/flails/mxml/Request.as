@@ -9,7 +9,8 @@ package flails.mxml {
 
   public class Request implements IMXMLObject {
     private var resource:Resource;
-
+    
+    public var data:Object;
     public var targetId:Object;
     public var type:String;
 
@@ -28,8 +29,11 @@ package flails.mxml {
       var rp:RequestPipe = resource.newRequestPipe();
 
       rp.addEventListener("result", onResult);
-
-      if (targetId != null) {
+      
+      if (targetId != null && data != null) {
+        rp[type](data, targetId);
+      }
+      else if (targetId != null) {
         trace("calling " + type + "(" + targetId + ")")
         rp[type](targetId);
       } else {
