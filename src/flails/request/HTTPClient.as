@@ -72,7 +72,7 @@ package flails.request {
       doGet(pathBuilder.show(id));
     }
     
-    public function create(data:Object, id:Object = null):void {
+    public function create(data:Object):void {
       pushParams(data, "POST");
       
       doPost(pathBuilder.create());

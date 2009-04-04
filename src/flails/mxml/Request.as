@@ -7,6 +7,8 @@ package flails.mxml {
   import flails.resource.Resources;
   import flails.resource.Resource;
 
+  import mx.controls.Alert;
+
   public class Request implements IMXMLObject {
     private var resource:Resource;
     
@@ -27,11 +29,13 @@ package flails.mxml {
 
     public function send():void {
       var rp:RequestPipe = resource.newRequestPipe();
-
       rp.addEventListener("result", onResult);
       
-      if (targetId != null && data != null) {
+      if (data != null && targetId != null) {
         rp[type](data, targetId);
+      }
+      else if (data != null) {
+        rp[type](data);
       }
       else if (targetId != null) {
         trace("calling " + type + "(" + targetId + ")")

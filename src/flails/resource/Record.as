@@ -4,7 +4,6 @@
  */
 
 package flails.resource {
-  import mx.controls.Alert;
   
 //import flails.resource.Resource;
   

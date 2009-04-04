@@ -26,7 +26,7 @@ package test.mxml {
       r.resourceName = "posts"
     }
 
-    public function testIndex():void {
+/*    public function testIndex():void {
       r.type = "index";
       r.initialized(null, null);
 
@@ -58,10 +58,10 @@ package test.mxml {
           }, 1000));
 
       r.send();
-    }
+    }*/
 
-    /*
-    public function testFindByID():void {
+    
+/*    public function testFindByID():void {
       Request finder = Resource.forName("post").finder();
       finder.addEventListener("result", addAsync(subjectMatches, 1000));
 
@@ -70,21 +70,45 @@ package test.mxml {
 
     private function subjectMatches(post:*):void {
       assertEquals("This post was updated", post.subject);
+    }*/
+    
+    public function testCreateWithID():void {
+      r.type = "create"
+      r.data = {id: 1, post: {subject: "test1234", body: "Here is a new post created through Flails!"}};
+      r.initialized(null, null);
+      
+      r.addEventListener("propertyChange", asyncHandler(function (e:PropertyChangeEvent, data:Object):void {
+            var r:Record = e.newValue as Record;
+
+            assertEquals("test1234", r.subject);
+            assertEquals("Here is a new post created through Flails!", r.body);
+          }, 1000));
+
+      r.send();
     }
     
-    public function testCreate():void {
-      Request creator = Resource.forName("post").creator()
-      creator.addEventListener("result", addAsync(postCreated, 1000));
+    public function testCreateWithData():void {
+      r.type = "create"
+      r.data = {post: {subject: "test123", body: "Here is a new post created through Flails!"}};
+      r.initialized(null, null);
+      
+      r.addEventListener("propertyChange", asyncHandler(function (e:PropertyChangeEvent, data:Object):void {
+            var r:Record = e.newValue as Record;
 
-      creator.create({subject: "test123", body: "Here is a new post created through Flails!", user_id: 1});
+            assertEquals("test123", r.subject);
+            assertEquals("Here is a new post created through Flails!", r.body);
+          }, 1000));
+
+      r.send();
     }
 
-    private var postCreated(post:*):void {
+/*    private var postCreated(post:*):void {
       assertTrue(post.id >= 1);
       assertEquals("test123", post.subject);
       assertEquals("Here is a new post created through Flails!", post.body);
-    }
+    }*/
     
+/*    
     public function testUpdate():void {
       Request updater = Resource.forName("post").updater()
       updater.addEventListener("result", addAsync(postUpdated, 1000));
@@ -106,6 +130,6 @@ package test.mxml {
     private var postDeleted(post:*):void {
       assertEquals("This post was updated", post.subject);
       assertEquals("Here is an existing post updated through Flails!", post.body);
-      }*/
+    }*/
   }
 }

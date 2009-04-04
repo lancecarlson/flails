@@ -36,7 +36,7 @@ package flails.request {
       ExternalInterface.call(pathBuilder.show(id), id);
     }
     
-    public function create(data:Object, id:Object = null):void {
+    public function create(data:Object):void {
       //ExternalInterface.addCallback(pathBuilder.create() + "Result");
       //ExternalInterface.call(pathBuilder.create(), data);
     }

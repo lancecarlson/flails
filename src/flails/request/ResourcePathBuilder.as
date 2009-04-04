@@ -5,7 +5,6 @@
  
 package flails.request {
   import flails.request.PathBuilder;
-  import mx.controls.Alert;
   public class ResourcePathBuilder implements PathBuilder {
     public var host:String = "";
     private var pluralResource:String;

@@ -42,7 +42,7 @@ package flails.request {
       doRemote(pathBuilder.show(id));
     }
     
-    public function create(data:Object, id:Object = null):void {
+    public function create(data:Object):void {
 /*      pushParams(data, "POST");*/
       
       doRemote(pathBuilder.create());
