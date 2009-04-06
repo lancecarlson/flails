@@ -46,7 +46,7 @@ package flails.request {
       doRemote(pathBuilder.create());
     }
 
-    public function update(data:Object, id:Object):void {
+    public function update(data:Object, id:Object = null):void {
 /*      pushParams(data, "PUT");*/
 
       doRemote(pathBuilder.update(id));

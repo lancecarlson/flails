@@ -39,8 +39,6 @@ package test.request {
     }
 
     public function testShow():void {
-      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
-
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = e.result as Record;
 
@@ -51,7 +49,6 @@ package test.request {
     }
     
     public function testShowNotFound():void {
-      var r:HTTPClient = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter());
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = e.result as Record;
 

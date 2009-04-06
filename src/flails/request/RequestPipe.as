@@ -5,7 +5,7 @@ package flails.request {
     
     function show(id:Object = null):void;
     
-    function update(data:Object, id:Object):void;
+    function update(data:Object, id:Object = null):void;
     
     function create(data:Object):void;
     

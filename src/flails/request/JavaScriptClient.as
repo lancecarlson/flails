@@ -39,7 +39,7 @@ package flails.request {
       //ExternalInterface.call(pathBuilder.create(), data);
     }
 
-    public function update(data:Object, id:Object):void {
+    public function update(data:Object, id:Object = null):void {
       // ...
     }
     

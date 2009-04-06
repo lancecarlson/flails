@@ -7,11 +7,12 @@ package test.request {
   import flails.request.HTTPClient;
   import flails.request.ResourcePathBuilder;
   import flails.request.RemoteClient;
+  import flails.request.RequestConfig;
 
   public class RemoteClientTest extends TestCase {
 
     override protected function setUp():void {
-      var cleanup:HTTPClient = new HTTPClient(null)
+      var cleanup:HTTPClient = new HTTPClient(null, null, new RequestConfig())
       cleanup.addEventListener("result", asyncHandler(pendUntilComplete, 1000))
       cleanup.doGet("/posts/reset");
     }
@@ -29,6 +30,5 @@ package test.request {
           }, 1000));
       r.index();
     }
-
   }
 }
