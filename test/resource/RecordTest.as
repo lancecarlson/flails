@@ -1,7 +1,5 @@
 package test.resource {
   
-  import mx.controls.Alert;
-  
   import flails.resource.Record;
   
   import net.digitalprimates.fluint.tests.TestCase;

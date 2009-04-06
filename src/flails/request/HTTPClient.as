@@ -27,8 +27,6 @@ package flails.request {
   import flails.request.PathBuilder;
   import flails.request.RequestPipe;
   
-  import mx.controls.Alert;
-  
   //import com.adobe.serialization.json.*;
   
   public class HTTPClient extends EventDispatcher implements RequestPipe {

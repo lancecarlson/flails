@@ -11,7 +11,7 @@ package test {
       addTestCase(new JSONFilterTest());
       addTestCase(new IdentityFilterTest());
       addTestCase(new RequestTest());
-      addTestCase(new RemoteClientTest());
+/*      addTestCase(new RemoteClientTest());*/
       addTestCase(new ResourceInstantiationTest());
       addTestCase(new RecordTest());
       addTestCase(new ResourceJavaScriptBuilderTest());

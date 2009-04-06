@@ -22,8 +22,6 @@ package flails.request {
   
   import flails.request.PathBuilder;
   
-  import mx.controls.Alert;
-  
   public class RemoteClient extends EventDispatcher implements RequestPipe {
     public var data:Object;
     private var pathBuilder:PathBuilder;
@@ -121,7 +119,6 @@ package flails.request {
       remoteObject.destination = "rubyamf";
       remoteObject.index();
       remoteObject.addEventListener("result", function():void {
-        Alert.show("test");
       })
       remoteObject.index();
     }

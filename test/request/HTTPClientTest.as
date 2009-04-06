@@ -6,7 +6,6 @@ package test.request {
   import flails.resource.Record;
   import flails.request.ResourcePathBuilder;
   import flails.request.RequestConfig;
-  import mx.controls.Alert;
   
   import net.digitalprimates.fluint.tests.TestCase;
 

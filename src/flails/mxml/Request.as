@@ -7,8 +7,6 @@ package flails.mxml {
   import flails.resource.Resources;
   import flails.resource.Resource;
 
-  import mx.controls.Alert;
-
   public class Request implements IMXMLObject {
     private var resource:Resource;
     
