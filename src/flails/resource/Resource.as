@@ -19,7 +19,6 @@ package flails.resource {
   public class Resource implements IMXMLObject {
     private var requestPipeConstructor:Function;
 
-
     public var name:String;
     public var instanceClass:Class;
     public var requestAdapter:String;

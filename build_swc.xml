@@ -13,7 +13,7 @@
   <include-classes>
       <class>flails.resource.Resources</class>
       <class>flails.resource.Resource</class>
-      <class>flails.resource.Record</class>
+      <class>flails.resource.Extractor</class>
       <class>flails.request.RequestPipe</class>
       <class>flails.request.RequestConfig</class>
       <class>flails.request.RequestParam</class>

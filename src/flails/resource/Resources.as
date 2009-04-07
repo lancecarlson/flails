@@ -18,5 +18,9 @@ package flails.resource {
 
     public function initialized(parent:Object, id:String):void {
     }
+
+    public function resource(name:String):Resource {
+      return getResource(name);
+    }
   }
 }

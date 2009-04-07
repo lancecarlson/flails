@@ -17,9 +17,9 @@ package flails.resource {
     }
 
     public function setAttributes(attributes:Object):void {
-      
       trace("setting the record's attributes");
-      for(var key:String in attributes) {
+
+      for (var key:String in attributes) {
         trace("setting " + key + " with " + attributes[key]);
         this[key] = attributes[key];
       }

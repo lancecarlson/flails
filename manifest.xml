@@ -5,4 +5,5 @@
   <component id="RequestParam" class="flails.request.RequestParam"/>
   <component id="Resource" class="flails.resource.Resource"/>
   <component id="Request" class="flails.mxml.Request"/>
+  <component id="ResourcefulServiceInvoker" class="flails.mxml.ResourcefulServiceInvoker"/>
 </componentPackage>

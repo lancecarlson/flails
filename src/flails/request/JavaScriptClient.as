@@ -49,6 +49,7 @@ package flails.request {
 
     private function onShowResponse(data:Object):void {
       trace("called back with data: " + data);
+
       dispatchEvent(new ResultEvent("result", false, false, filter.load(data)));
     }
   }

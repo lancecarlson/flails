@@ -1,5 +1,6 @@
 package flails.request {
   import flash.events.IEventDispatcher;
+
   public interface RequestPipe extends IEventDispatcher {
     function index():void;
     
