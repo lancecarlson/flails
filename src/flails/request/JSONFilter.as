@@ -8,30 +8,11 @@ package flails.request {
   import flails.resource.Record;
   import flails.request.Filter;
   
-  public class JSONFilter implements Filter{
-    private var targetClass:Class;
-    public function JSONFilter(targetClass:Class = null) {
-      if (targetClass) {
-        this.targetClass = targetClass;
-      } else {
-        this.targetClass = Record;
-      }
-    }
+  public class JSONFilter implements Filter {
+    public function JSONFilter(targetClass:Class = null) {}
     
     public function load(data:Object):Object {
-      var decoded:Object = JSON.decode(data as String);
-
-      if (decoded is Array) {
-        var a:Array = [];
-
-        for each(var o:Object in decoded) {
-          a.push(new targetClass(o));
-        }
-
-        return a;
-      } else {
-        return new targetClass(decoded);
-      }
+      return JSON.decode(data as String);
     }
 
     public function dump(data:Object):Object {

@@ -12,15 +12,16 @@ package flails.mxml {
 
   public class ResourcefulServiceInvoker extends AbstractServiceInvoker implements IAction {
     public var resource:Resource;
-    public var data:Object;
-    public var targetId:Object;
+    public var data:Array;
     public var type:String;
     public var id:String;
     public var parent:Object;
 
     [Bindable] public var result:Object;
 
-    public function ResourcefulServiceInvoker() { super(); }
+    public function ResourcefulServiceInvoker() { 
+      currentInstance = this;
+    }
 
     override protected function prepare(scope:IScope):void {
       super.prepare(scope);
@@ -41,19 +42,9 @@ package flails.mxml {
         createInnerHandlers(scope, FaultEvent.FAULT, faultHandlers);
       }
       
-      if (data != null && targetId != null) {
-        rp[type](data, targetId);
-      }
-      else if (data != null) {
-        rp[type](data);
-      }
-      else if (targetId != null) {
-        trace("calling " + type + "(" + targetId + ")")
-          rp[type](targetId);
-      } else {
-        trace("calling " + type)
-          rp[type]();
-      }
+      trace("calling " + type + "()");
+
+      rp[type].apply(rp, data);
     }
   }
 }

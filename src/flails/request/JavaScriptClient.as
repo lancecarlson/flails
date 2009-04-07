@@ -31,6 +31,12 @@ package flails.request {
       ExternalInterface.addCallback(pathBuilder.show(id) + "Result", onShowResponse);
 
       trace("calling " + pathBuilder.show(id));
+      
+      if (id != null)
+        trace("(" + id.constructor + ")");
+      else
+        trace("(null)");
+
       ExternalInterface.call(pathBuilder.show(id), id);
     }
     

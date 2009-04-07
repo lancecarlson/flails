@@ -125,9 +125,13 @@ package flails.request {
           name = param;
         }
 
+        trace("setting variable " + name);
+
         if (!(params[param] is String) && !(params[param] is Number)) {
+          trace("param " + param + " is an object (" + params[param].constructor + ")");
           paramsToVariables(variables, params[param], name);
         } else {
+          trace("value for param" + param + " is " + params[param]);
           variables[name] = params[param];
         }
       }
