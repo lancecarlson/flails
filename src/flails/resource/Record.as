@@ -16,13 +16,15 @@ package flails.resource {
       }
     }
 
-    public function setAttributes(attributes:Object):void {
+    public function setAttributes(attributes:Object):Record {
       trace("setting the record's attributes");
 
       for (var key:String in attributes) {
         trace("setting " + key + " with " + attributes[key]);
         this[key] = attributes[key];
       }
+
+      return this;
     }
     
     /*    public function resource():Resource {
