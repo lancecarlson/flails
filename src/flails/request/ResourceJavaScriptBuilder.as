@@ -11,23 +11,23 @@ package flails.request {
       this.pluralResource = pluralResource;
     }
     
-    public function index():String {
+    public function index(parentIds:Array = null):String {
       return pluralResource + "Index";
     }
     
-    public function show(id:Object = null):String {
+    public function show(id:Object = null, parentIds:Array = null):String {
       return pluralResource + "Show";
     }
     
-    public function update(id:Object = null):String {
+    public function update(id:Object = null, parentIds:Array = null):String {
       return pluralResource + "Update";
     }
     
-    public function create():String {
+    public function create(parentIds:Array = null):String {
       return pluralResource + "Create";
     }
     
-    public function destroy(id:Object = null):String {
+    public function destroy(id:Object = null, parentIds:Array = null):String {
       return pluralResource + "Destroy";
     }
   }

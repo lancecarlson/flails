@@ -22,11 +22,11 @@ package flails.request {
       this.filter      = filter;
     }
     
-    public function index():void {
+    public function index(data:Object = null, ... parentIds):void {
       // ...
     }
     
-    public function show(id:Object = null):void {
+    public function show(id:Object = null, data:Object = null, ... parentIds):void {
       trace("adding callback " + pathBuilder.show(id) + "Result");
       ExternalInterface.addCallback(pathBuilder.show(id) + "Result", onShowResponse);
 
@@ -40,16 +40,16 @@ package flails.request {
       ExternalInterface.call(pathBuilder.show(id), id);
     }
     
-    public function create(data:Object):void {
+    public function create(data:Object = null, ... parentIds):void {
       //ExternalInterface.addCallback(pathBuilder.create() + "Result");
       //ExternalInterface.call(pathBuilder.create(), data);
     }
 
-    public function update(data:Object, id:Object = null):void {
+    public function update(id:Object = null, data:Object = null, ... parentIds):void {
       // ...
     }
     
-    public function destroy(id:Object):void {
+    public function destroy(id:Object, data:Object = null, ... parentIds):void {
       // ...
     }
 

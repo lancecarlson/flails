@@ -62,36 +62,36 @@ package flails.request {
       this.config      = config;
     }
     
-    public function index():void {
+    public function index(data:Object = null, ... parentIds):void {
       trace("entered index");
 
-      configureRequest({}, "GET");
+      configureRequest(data, "GET");
 
-      doGet(pathBuilder.index());
+      doGet(pathBuilder.index(parentIds));
     }
     
-    public function show(id:Object = null):void {
-      configureRequest({}, "GET");
+    public function show(id:Object = null, data:Object = null,  ... parentIds):void {
+      configureRequest(data, "GET");
 
-      doGet(pathBuilder.show(id));
+      doGet(pathBuilder.show(id, parentIds));
     }
     
-    public function create(data:Object):void {
+    public function create(data:Object = null, ... parentIds):void {
       configureRequest(data, "POST");
       
-      doPost(pathBuilder.create());
+      doPost(pathBuilder.create(parentIds));
     }
 
-    public function update(data:Object, id:Object = null):void {
+    public function update(id:Object = null, data:Object = null, ... parentIds):void {
       configureRequest(data, "PUT");
 
-      doPost(pathBuilder.update(id));
+      doPost(pathBuilder.update(id, parentIds));
     }
     
-    public function destroy(id:Object):void {
-      configureRequest({}, "DELETE");
+    public function destroy(id:Object, data:Object = null, ... parentIds):void {
+      configureRequest(data, "DELETE");
       
-      doPost(pathBuilder.destroy(id));
+      doPost(pathBuilder.destroy(id, parentIds));
     }
 
     private function configureRequest(params:Object, method:String):void {

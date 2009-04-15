@@ -24,6 +24,7 @@ package flails.resource {
     public var requestAdapter:String;
     public var requestFilter:String;
     public var requestConfig:RequestConfig;
+    public var resourceParent:Resource;
     
     public function Resource() {}
     
@@ -67,7 +68,14 @@ package flails.resource {
         }
       case "http":
         return function(config:RequestConfig):RequestPipe {
-          return new HTTPClient(new ResourcePathBuilder(name), filter, config);
+          var b:ResourcePathBuilder;
+
+          if (resourceParent)
+            b = new ResourcePathBuilder(name, requestFilter, new ResourcePathBuilder(resourceParent.name));
+          else
+            b = new ResourcePathBuilder(name);
+
+          return new HTTPClient(b, filter, config);
         }
       default:
         throw new Error("No valid request adapter found for param " + adapter);
