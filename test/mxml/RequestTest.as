@@ -78,7 +78,8 @@ package test.mxml {
       r.initialized(null, null);
       
       r.addEventListener("propertyChange", asyncHandler(function (e:PropertyChangeEvent, data:Object):void {
-            var r:Record = e.newValue as Record;
+            var r:Record = new Record;
+            r.setAttributes(e.newValue);
 
             assertEquals("test1234", r.subject);
             assertEquals("Here is a new post created through Flails!", r.body);
@@ -93,7 +94,8 @@ package test.mxml {
       r.initialized(null, null);
       
       r.addEventListener("propertyChange", asyncHandler(function (e:PropertyChangeEvent, data:Object):void {
-            var r:Record = e.newValue as Record;
+            var r:Record = new Record;
+            r.setAttributes(e.newValue);
 
             assertEquals("test123", r.subject);
             assertEquals("Here is a new post created through Flails!", r.body);

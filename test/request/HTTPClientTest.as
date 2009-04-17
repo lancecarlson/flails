@@ -40,7 +40,8 @@ package test.request {
 
     public function testShow():void {
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
-            var p:Record = e.result as Record;
+            var p:Record = new Record;
+            p.setAttributes(e.result);
 
             assertEquals('testFindAll #1', p.subject);
             assertEquals('testFindAll #1 body', p.body);
@@ -50,7 +51,8 @@ package test.request {
     
     public function testShowNotFound():void {
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
-            var p:Record = e.result as Record;
+            var p:Record = new Record;
+            p.setAttributes(e.result);
 
             assertEquals('Record Not Found', p.message);
           }, 1500));
@@ -64,7 +66,8 @@ package test.request {
     
     private function verifyCreateComplete(e:ResultEvent, data:Object):void {
       rCheck.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
-        var p:Record = e.result as Record;
+        var p:Record = new Record;
+        p.setAttributes(e.result);
         
         assertEquals('creating new post', p.subject);
         assertEquals('creating new post with body', p.body);
@@ -80,7 +83,8 @@ package test.request {
 
     private function verifyUpdateComplete(e:ResultEvent, data:Object):void {
       rCheck.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
-            var p:Record = e.result as Record;
+            var p:Record = new Record;
+            p.setAttributes(e.result);
 
             assertEquals('testFindAll #2 updated', p.subject);
             assertEquals('testFindAll #2 body updated', p.body);
@@ -94,12 +98,15 @@ package test.request {
     }
     
     private function verifyDestroy(e:ResultEvent, data:Object):void {
-      var p:Record = e.result as Record;
+      var p:Record = new Record;
+      p.setAttributes(e.result);
         
       assertEquals(2, p.id);
       
       rCheck.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
-        var p2:Record = e.result as Record;
+        var p2:Record = new Record;
+        p2.setAttributes(e.result);
+        
         assertEquals(null, p2.id);
       }, 1500));
       

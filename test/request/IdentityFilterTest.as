@@ -13,10 +13,10 @@ package test.request {
       var a:Array = f.load(aOrig) as Array;
 
       assertEquals(2, a.length);
-      assertEquals(Record, a[0].constructor);
+      assertEquals(Object, a[0].constructor);
       assertEquals(1, a[0].attr1)
       assertEquals(2, a[0].attr2)
-      assertEquals(Record, a[1].constructor);
+      assertEquals(Object, a[1].constructor);
       assertEquals(3, a[1].attr1)
       assertEquals(4, a[1].attr2)
     }
@@ -33,7 +33,7 @@ package test.request {
     public function testLoadRecord():void {
       var f:IdentityFilter = new IdentityFilter();
       var orig:Object = {attr1: 1, attr2: 2};
-      var a:Record = f.load(orig) as Record;
+      var a:Record = new Record(f.load(orig));
 
       assertEquals(Record, a.constructor);
       assertEquals(1, a.attr1)
@@ -43,7 +43,7 @@ package test.request {
     public function testLoadCustomRecord():void {
       var f:IdentityFilter = new IdentityFilter(Post);
       var orig:Object = {attr1: 1, attr2: 2};
-      var a:Record = f.load(orig) as Record;
+      var a:Record = new Record(f.load(orig));
 
       assertEquals(Post, a.constructor);
     }

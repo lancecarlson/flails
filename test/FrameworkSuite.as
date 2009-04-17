@@ -6,7 +6,7 @@ package test {
 
   public class FrameworkSuite extends TestSuite {
     public function FrameworkSuite() {
-      addTestCase(new ResourcePathBuilderTest());
+/*      addTestCase(new ResourcePathBuilderTest());*/
       addTestCase(new HTTPClientTest());
       addTestCase(new JSONFilterTest());
       addTestCase(new IdentityFilterTest());
