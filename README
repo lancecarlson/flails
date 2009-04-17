@@ -4,27 +4,20 @@ Installation:
 3) Setup your rails app to respond to json requests (TODO: Provide examples)
 4) Profit!
 
-Example usage:
+Flails is now integrated into the Mate framework. 
 
-const Comment:Model = new Model(["post", "comment"])
-var request:Request = Comment.findAll();
+Example code:
 
-const Post:Model = new Model("post");
-var request:Request = Post.findAll();
+<Injectors target="{ListView}">
+  <fl:ResourcefulServiceInvoker resource="{resources.posts}" type="index">
+    <fl:resultHandlers>
+      <PropertyInjector targetKey="dataProvider" source="{currentEvent}" sourceKey="result" />
+    </fl:resultHandlers>
+  </fl:ResourcefulServiceInvoker>
+</Injectors>
 
-request.onComplete(function(posts:*):void {
-  posts.forEach(function(post:*, index:int, array:Array):void {
-    Alert.show(post.subject);
-		post.comments.forEach(function(comment:*, index:int, array:Array):void {
-			Alert.show(comment.body);
-		})
-  });
-});
-
-request.onProgress(function():void {
-	Alert.show("Progressing!");
-})
-
-request.onError(function():void {
-  Alert("Darn");
-})
+ListView.mxml:
+<mx:List height="100%" width="100%"
+         xmlns:mx="http://www.adobe.com/2006/mxml"
+         xmlns:mt="http://mate.asfusion.com/">
+</mx:List>
