@@ -116,23 +116,35 @@ package flails.request {
     }
     
     private function paramsToVariables(variables:URLVariables, params:Object, prefix:String = null):void {
-      for (var param:String in params) {
-        var name:String;
-
-        if (prefix) {
-          name = prefix + "[" + param + "]";
-        } else {
-          name = param;
+      if (params is Array) {
+        for (var i:int = 0; i < params.length; i++) {
+          if (!(params[i] is String) && !(params[i] is Number)) {
+            trace("param " + i + " is an object (" + params[i].constructor + ")");
+            paramsToVariables(variables, params[i], prefix + "[" + i + "]");
+          } else {
+            trace("value for param" + i + " is " + params[param]);
+            variables[prefix + "[" + i + "]"] = params[i];
+          }
         }
+      } else {
+        for (var param:String in params) {
+          var name:String;
+      
+          if (prefix) {
+            name = prefix + "[" + param + "]";
+          } else {
+            name = param;
+          }
 
-        trace("setting variable " + name);
+          trace("setting variable " + name);
 
-        if (!(params[param] is String) && !(params[param] is Number)) {
-          trace("param " + param + " is an object (" + params[param].constructor + ")");
-          paramsToVariables(variables, params[param], name);
-        } else {
-          trace("value for param" + param + " is " + params[param]);
-          variables[name] = params[param];
+          if (!(params[param] is String) && !(params[param] is Number)) {
+            trace("param " + param + " is an object (" + params[param].constructor + ")");
+            paramsToVariables(variables, params[param], name);
+          } else {
+            trace("value for param" + param + " is " + params[param]);
+            variables[name] = params[param];
+          }
         }
       }
     }
