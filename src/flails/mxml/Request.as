@@ -40,10 +40,10 @@ package flails.mxml {
         rp[type](data);
       }
       else if (targetId != null) {
-        trace("calling " + type + "(" + targetId + ")")
+/*        trace("calling " + type + "(" + targetId + ")")*/
         rp[type](targetId);
       } else {
-        trace("calling " + type)
+/*        trace("calling " + type)*/
         rp[type]();
       }
     }

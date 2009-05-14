@@ -21,7 +21,7 @@ package flails.mxml {
     [Bindable] public var result:Object;
 
     public function set data(args:Object):void {
-      trace("setting data");
+/*      trace("setting data");*/
 
       if (args is Array)
         _data = args as Array;
@@ -36,7 +36,7 @@ package flails.mxml {
     }
 
     override protected function run(scope:IScope):void {
-      trace ("Using resource " + resource);
+/*      trace ("Using resource " + resource);*/
 
       var rp:RequestPipe = resource.newRequestPipe();
 
@@ -50,7 +50,7 @@ package flails.mxml {
         createInnerHandlers(scope, FaultEvent.FAULT, faultHandlers);
       }
       
-      trace("calling " + type + "() with " + _data);
+/*      trace("calling " + type + "() with " + _data);*/
 
       rp[type].apply(rp, _data);
     }

@@ -63,8 +63,6 @@ package flails.request {
     }
     
     public function index(data:Object = null, ... parentIds):void {
-      trace("entered index");
-
       configureRequest(data, "GET");
 
       doGet(pathBuilder.index(parentIds));
@@ -95,7 +93,6 @@ package flails.request {
     }
 
     private function configureRequest(params:Object, method:String):void {
-      trace("configuring...")
       var variables:URLVariables = new URLVariables();
       
       // TODO: This is rails specific. Move it somewhere more appropriate
@@ -105,7 +102,6 @@ package flails.request {
 
       trace("Adding " + config.extraParams.length + " extra variables");
       for each (var p:RequestParam in config.extraParams) {
-        trace("adding extra var " + p.name + " with value " + p.value); 
         variables[p.name] = p.value;
       }
 
@@ -119,10 +115,8 @@ package flails.request {
       if (params is Array) {
         for (var i:int = 0; i < params.length; i++) {
           if (!(params[i] is String) && !(params[i] is Number)) {
-            trace("param " + i + " is an object (" + params[i].constructor + ")");
             paramsToVariables(variables, params[i], prefix + "[" + i + "]");
           } else {
-            trace("value for param" + i + " is " + params[param]);
             variables[prefix + "[" + i + "]"] = params[i];
           }
         }
@@ -136,13 +130,9 @@ package flails.request {
             name = param;
           }
 
-          trace("setting variable " + name);
-
           if (!(params[param] is String) && !(params[param] is Number)) {
-            trace("param " + param + " is an object (" + params[param].constructor + ")");
             paramsToVariables(variables, params[param], name);
           } else {
-            trace("value for param" + param + " is " + params[param]);
             variables[name] = params[param];
           }
         }
@@ -164,11 +154,9 @@ package flails.request {
     }
     
     public function doGet(url:String):void {
-      trace("entering doGet");
       // TODO: This should be set by the filter
       addHeader("Content-Type", "application/json");
 
-      trace("setting url " + config.baseUrl + url);
       request.url = config.baseUrl + url;
       
       loader.addEventListener("complete", onComplete);
@@ -176,11 +164,9 @@ package flails.request {
     }
 
     public function doPost(url:String):void {
-      trace("entering doPost");
       addHeader("Content-Type", "application/x-www-form-urlencoded");
 
       request.method = "POST";
-      trace("setting url " + config.baseUrl + url);
       request.url = config.baseUrl + url;
 
       loader.addEventListener("complete", onComplete);

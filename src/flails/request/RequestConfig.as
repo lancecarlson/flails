@@ -11,8 +11,6 @@ package flails.request {
     public var parent:Object;
 
     public function initialized(parent:Object, id:String):void {
-      trace("initialized RequestConfig");
-      trace("extraParam length is " + extraParams.length);
       this.parent = parent;
       this.id = id;
     }

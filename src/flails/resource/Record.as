@@ -9,18 +9,14 @@ package flails.resource {
   
   dynamic public class Record extends EventDispatcher {
     public function Record(attributes:Object=null) {
-      trace("initializing Record with attributes " + attributes)
-      
       if (attributes != null) {
         setAttributes(attributes);
       }
     }
 
     public function setAttributes(attributes:Object):Record {
-      trace("setting the record's attributes");
 
       for (var key:String in attributes) {
-        trace("setting " + key + " with " + attributes[key]);
         this[key] = attributes[key];
       }
 
