@@ -3,16 +3,18 @@
  * See LICENSE for full license information.
  */
 
-package flails.resource {
+package flails.resource.mxml {
   import flails.request.RequestPipe;
   import flails.request.Filter;
-  import flails.request.HTTPClient;
   import flails.request.JavaScriptClient;
   import flails.request.ResourcePathBuilder;
   import flails.request.ResourceJavaScriptBuilder;
   import flails.request.JSONFilter;
   import flails.request.IdentityFilter;
   import flails.request.RequestConfig;
+
+  import flails.resource.HTTPResource;
+  import flails.resource.Record;
 
   import mx.core.IMXMLObject;
 
@@ -75,7 +77,7 @@ package flails.resource {
           else
             b = new ResourcePathBuilder(name);
 
-          return new HTTPClient(b, filter, config);
+          return new HTTPResource(b, filter, config);
         }
       default:
         throw new Error("No valid request adapter found for param " + adapter);

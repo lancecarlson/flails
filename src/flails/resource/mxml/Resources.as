@@ -1,4 +1,4 @@
-package flails.resource {
+package flails.resource.mxml {
   import mx.core.IMXMLObject;
   import flash.utils.Dictionary;
 

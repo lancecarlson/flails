@@ -12,7 +12,7 @@ Check this for details:
 
 http://stackoverflow.com/questions/188887/how-to-access-as3-urlloader-return-data-on-ioerrorevent
 */
-package flails.request {
+package flails.resource {
   import flash.events.EventDispatcher;
   import flash.events.Event;
 
@@ -26,10 +26,12 @@ package flails.request {
   import flails.request.Filter;
   import flails.request.PathBuilder;
   import flails.request.RequestPipe;
+  import flails.request.RequestConfig;
+  import flails.request.RequestParam;
   
   //import com.adobe.serialization.json.*;
   
-  public class HTTPClient extends EventDispatcher implements RequestPipe {
+  public class HTTPResource extends EventDispatcher implements RequestPipe {
     private var loader:URLLoader = new URLLoader();
     private var request:URLRequest = new URLRequest();
     private var errorHandler:Function;
@@ -56,7 +58,7 @@ package flails.request {
     // Dispatched if a call to URLLoader.load() attempts to load data from a server outside the security sandbox.
     public const SECURITY_ERROR:String = "securityError";
     
-    public function HTTPClient(pathBuilder:PathBuilder, filter:Filter, config:RequestConfig) {
+    public function HTTPResource(pathBuilder:PathBuilder, filter:Filter, config:RequestConfig) {
       this.pathBuilder = pathBuilder;
       this.filter      = filter;
       this.config      = config;

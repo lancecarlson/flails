@@ -1,7 +1,7 @@
-package test.request {
+package test.resource {
   import mx.rpc.events.ResultEvent;
 
-  import flails.request.HTTPClient;
+  import flails.resource.HTTPResource;
   import flails.request.JSONFilter;
   import flails.resource.Record;
   import flails.request.ResourcePathBuilder;
@@ -9,20 +9,20 @@ package test.request {
   
   import net.digitalprimates.fluint.tests.TestCase;
 
-  public class HTTPClientTest extends TestCase {
-    private var r:HTTPClient;
-    private var rCheck:HTTPClient;
+  public class HTTPResourceTest extends TestCase {
+    private var r:HTTPResource;
+    private var rCheck:HTTPResource;
 
     override protected function setUp():void {
-      var cleanup:HTTPClient = new HTTPClient(null, null, new RequestConfig())
+      var cleanup:HTTPResource = new HTTPResource(null, null, new RequestConfig())
       cleanup.addEventListener("result", asyncHandler(pendUntilComplete, 1000))
       cleanup.doGet("/posts/reset");
 
       var rc:RequestConfig = new RequestConfig();
       rc.baseUrl = "http://localhost:3000";
       
-      r = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter(), rc);
-      rCheck = new HTTPClient(new ResourcePathBuilder("posts"), new JSONFilter(), rc);
+      r = new HTTPResource(new ResourcePathBuilder("posts"), new JSONFilter(), rc);
+      rCheck = new HTTPResource(new ResourcePathBuilder("posts"), new JSONFilter(), rc);
     }
 
     public function testIndex():void {

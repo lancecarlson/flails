@@ -5,7 +5,7 @@ package test.resource {
 
   import flails.request.JavaScriptClient;
   import flails.request.RequestPipe;
-  import flails.resource.Resource;
+  import flails.resource.mxml.Resource;
   
   public class ResourceInstantiationTest extends TestCase {
     public var r:Resource;
