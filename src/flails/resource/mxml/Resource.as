@@ -54,7 +54,7 @@ package flails.resource.mxml {
     private function buildRequestFilter(type:String):Filter {
       switch (type) {
       case "json":
-        return new JSONFilter(instanceClass);
+        return new JSONFilter();
       case "identity":
         return new IdentityFilter(instanceClass);
       default:

@@ -40,24 +40,6 @@ package flails.resource {
     private var filter:Filter;
     private var config:RequestConfig;
     
-    // Dispatched after all the received data is decoded and placed in the data property of the URLLoader object. The received data may be accessed once this event has been dispatched.
-    public const COMPLETE:String = "complete";
-    
-    // Dispatched when the download operation commences following a call to the URLLoader.load() method.
-    public const OPEN:String = "open";
-    
-    // Dispatched when data is received as the download operation progresses.
-    public const PROGRESS:String = "progress"; 
-    
-    // Dispatched if a call to URLLoader.load() attempts to access data over HTTP and the current Flash Player environment is able to detect and return the status code for the request.
-    public const HTTP_STATUS:String = "httpStatus";
-    
-    // Dispatched if a call to URLLoader.load() results in a fatal error that terminates the download.
-    public const IO_ERROR:String = "ioError";
-    
-    // Dispatched if a call to URLLoader.load() attempts to load data from a server outside the security sandbox.
-    public const SECURITY_ERROR:String = "securityError";
-    
     public function HTTPResource(pathBuilder:PathBuilder, filter:Filter, config:RequestConfig) {
       this.pathBuilder = pathBuilder;
       this.filter      = filter;
@@ -102,7 +84,6 @@ package flails.resource {
         variables["_method"] = method.toLowerCase();
       }
 
-      trace("Adding " + config.extraParams.length + " extra variables");
       for each (var p:RequestParam in config.extraParams) {
         variables[p.name] = p.value;
       }
