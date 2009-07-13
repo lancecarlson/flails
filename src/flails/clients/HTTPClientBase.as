@@ -2,16 +2,6 @@
  * Copyright (c) 2009 Lance Carlson
  * See LICENSE for full license information.
  */
-
-/*
-Client does not handle status codes over 200 because of flash and URLLoader. Therefore, all validation 
-errors or NotFound errors need to be sent back with a 200 status code. Whenever an exception is raised, 
-an IOError is fired which is automatically handled by the framework to Alert that there was a problem. 
-
-Check this for details: 
-
-http://stackoverflow.com/questions/188887/how-to-access-as3-urlloader-return-data-on-ioerrorevent
-*/
 package flails.clients {
   import flash.events.EventDispatcher;
   import flash.events.Event;

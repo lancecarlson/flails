@@ -7,13 +7,11 @@ package test {
 
   public class FrameworkSuite extends TestSuite {
     public function FrameworkSuite() {
-      addTestCase(new HTTPResourceTest());
+      addTestCase(new RailsResourceTest());
       addTestCase(new JSONFilterTest());
-      addTestCase(new HTTPRailsClientTest());
+      addTestCase(new RailsClientTest());
       addTestCase(new IdentityFilterTest());
-      addTestCase(new ResourceInstantiationTest());
       addTestCase(new RecordTest());
-      addTestCase(new ResourceJavaScriptBuilderTest());
     }
   }
 }

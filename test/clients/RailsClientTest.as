@@ -3,13 +3,13 @@ package test.clients {
 
   import mx.rpc.events.ResultEvent;
 
-  import flails.clients.HTTPRailsClient;
+  import flails.clients.RailsClient;
   import flails.clients.HTTPClientBase;
   import flails.request.JSONFilter;
   
-  public class HTTPRailsClientTest extends TestCase {
+  public class RailsClientTest extends TestCase {
     public function testPost():void {
-      var client:HTTPRailsClient = new HTTPRailsClient("http://localhost:3000/clients", 
+      var client:RailsClient = new RailsClient("http://localhost:3000/clients", 
                                                        new JSONFilter(), 
                                                        HTTPClientBase.METHOD_POST, 
                                                        asyncHandler(function (e:ResultEvent, data:Object):void {
@@ -21,7 +21,7 @@ package test.clients {
     }
 
     public function testGet():void {
-      var client:HTTPRailsClient = new HTTPRailsClient("http://localhost:3000/clients", 
+      var client:RailsClient = new RailsClient("http://localhost:3000/clients", 
                                                        new JSONFilter(), 
                                                        HTTPClientBase.METHOD_GET, 
                                                        asyncHandler(function (e:ResultEvent, data:Object):void {
@@ -35,7 +35,7 @@ package test.clients {
     }
 
     public function testPut():void {
-      var client:HTTPRailsClient = new HTTPRailsClient("http://localhost:3000/clients/1", 
+      var client:RailsClient = new RailsClient("http://localhost:3000/clients/1", 
                                                        new JSONFilter(), 
                                                        HTTPClientBase.METHOD_PUT, 
                                                        asyncHandler(function (e:ResultEvent, data:Object):void {
@@ -48,7 +48,7 @@ package test.clients {
     }
 
     public function testDelete():void {
-      var client:HTTPRailsClient = new HTTPRailsClient("http://localhost:3000/clients/100", 
+      var client:RailsClient = new RailsClient("http://localhost:3000/clients/100", 
                                                        new JSONFilter(), 
                                                        HTTPClientBase.METHOD_DELETE, 
                                                        asyncHandler(function (e:ResultEvent, data:Object):void {

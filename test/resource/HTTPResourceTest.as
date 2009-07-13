@@ -1,7 +1,7 @@
 package test.resource {
   import mx.rpc.events.ResultEvent;
 
-  import flails.resource.HTTPResource;
+//  import flails.resource.HTTPResource;
   import flails.request.JSONFilter;
   import flails.resource.Record;
   import flails.request.ResourcePathBuilder;
@@ -10,7 +10,7 @@ package test.resource {
   import net.digitalprimates.fluint.tests.TestCase;
 
   public class HTTPResourceTest extends TestCase {
-    private var r:HTTPResource;
+/*    private var r:HTTPResource;
     private var rCheck:HTTPResource;
 
     override protected function setUp():void {
@@ -36,9 +36,9 @@ package test.resource {
             assertEquals('testFindAll #2 body', a[1].body);
           }, 1000));
       r.index();
-    }
+    }*/
 
-    public function testShow():void {
+/*    public function testShow():void {
       r.addEventListener("result", asyncHandler(function (e:ResultEvent, data:Object):void {
             var p:Record = new Record(e.result);
 
@@ -59,6 +59,7 @@ package test.resource {
     
     public function testCreate():void {
       r.addEventListener("result", asyncHandler(verifyCreateComplete, 1500));
+
       r.create({post: {subject: "creating new post", body: "creating new post with body"}});
     }
     
@@ -107,6 +108,6 @@ package test.resource {
       
       rCheck.show(p.id);
     }
-
+*/
   }
 }

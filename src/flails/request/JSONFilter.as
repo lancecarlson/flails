@@ -10,11 +10,16 @@ package flails.request {
   
   public class JSONFilter implements HTTPFilter {
     public static const CONTENT_TYPE:String = "application/json";
+    public static const EXTENSION:String = "json";
 
     public function JSONFilter() {}
     
     public function get contentType():String {
       return CONTENT_TYPE;
+    }
+
+    public function get extension():String {
+      return EXTENSION;
     }
 
     public function load(data:Object):Object {

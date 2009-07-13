@@ -9,8 +9,8 @@ package flails.clients {
   import mx.logging.ILogger;
   import mx.logging.Log;
 
-  public class HTTPRailsClient extends HTTPClientBase {
-    public function HTTPRailsClient(url:String, filter:HTTPFilter, method:String, completeHandler:Function = null, errorHandler:Function = null) {
+  public class RailsClient extends HTTPClientBase {
+    public function RailsClient(url:String, filter:HTTPFilter, method:String, completeHandler:Function = null, errorHandler:Function = null) {
       super(url, filter, method, completeHandler, errorHandler);
 
       this.log = Log.getLogger("flails.clients.HTTPRailsClient");
