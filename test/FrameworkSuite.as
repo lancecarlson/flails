@@ -10,7 +10,7 @@ package test {
       addTestCase(new RailsResourceTest());
       addTestCase(new JSONFilterTest());
       addTestCase(new RailsClientTest());
-      addTestCase(new IdentityFilterTest());
+      addTestCase(new JavaScriptClientTest());
       addTestCase(new RecordTest());
     }
   }
