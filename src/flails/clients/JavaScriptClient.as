@@ -7,39 +7,41 @@ package flails.clients {
   import flash.events.Event;
   import flash.events.IOErrorEvent;
   import flash.external.ExternalInterface;
-
   import flash.errors.IllegalOperationError;
 
   import mx.rpc.events.ResultEvent;
   import mx.logging.ILogger;
   import mx.logging.Log;
 
-  import flails.request.HTTPFilter;
+  import flails.request.Result;
+  import flails.request.IdentityFilter;
   
   public class JavaScriptClient extends EventDispatcher {
     protected var log:ILogger;
 
     private var methodName:String;
 
-    public function JavaScriptClient(methodName:String, completeHandler:Function = null, errorHandler:Function = null) {
+    public function JavaScriptClient(methodName:String) {
       log = Log.getLogger("flails.clients.JavaScriptClient");
 
       this.methodName = methodName;
-      
-      if (completeHandler != null)
-        addEventListener(ResultEvent.RESULT, completeHandler);
-
-      if (errorHandler != null)
-        addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
     }
 
-    public function send(... args):void {
+    public function send(... args):Result {
       log.debug("Calling " + methodName);
 
-      ExternalInterface.addCallback(methodName + "Result", onComplete);
+      var result:Result = new Result(new IdentityFilter());
+
+      ExternalInterface.addCallback(methodName + "Result", function(data:Object):void {
+        log.debug("Called back " + methodName + "Result" + " with result: " + data);
+
+        result.result = data;
+      });
       ExternalInterface.addCallback(methodName + "Error", onError);
 
       ExternalInterface.call.apply(ExternalInterface, [methodName].concat(args));
+
+      return result;
     }
 
     protected function onComplete(data:Object):void {      

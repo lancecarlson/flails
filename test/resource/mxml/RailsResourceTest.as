@@ -5,69 +5,59 @@ package test.resource.mxml {
   import flails.clients.RailsClient;
   import flails.request.JSONFilter;
   import flails.resource.mxml.RailsResource;
-  
-  import net.digitalprimates.fluint.tests.TestCase;
+  import flails.request.Result;
 
-  public class RailsResourceTest extends TestCase {
-    private var r:RailsResource;
+  import test.FlailsTest;
 
+  public class RailsResourceTest extends FlailsTest {
     override protected function setUp():void {
-      new RailsClient("http://localhost:3000/posts/reset", 
-                      new JSONFilter(), 
-                      HTTPClientBase.METHOD_GET, 
-                      asyncHandler(pendUntilComplete, 1000)).send();
+      new RailsClient("http://localhost:3000/posts/reset", HTTPClientBase.METHOD_GET, null).send();
     }
 
     public function testIndex():void {
-      resource.index(null, asyncHandler(function (e:ResultEvent, data:Object):void {
-        var a:Array = e.result as Array;
-        
+      doTest(resource.index(), function (a:Array):void {
         assertEquals(2, a.length);
         assertEquals('testFindAll #1', a[0].subject);
         assertEquals('testFindAll #1 body', a[0].body);
         assertEquals('testFindAll #2', a[1].subject);
         assertEquals('testFindAll #2 body', a[1].body);
-      }, 1000));
+      }, 1000);
     }
 
     public function testShow():void {
-      resource.show(1, null, asyncHandler(function (e:ResultEvent, data:Object):void {
-        assertEquals('testFindAll #1', e.result.subject);
-        assertEquals('testFindAll #1 body', e.result.body);
-      }, 1500));
+      doTest(resource.show(1), function (result:Object):void {
+        assertEquals('testFindAll #1', result.subject);
+        assertEquals('testFindAll #1 body', result.body);
+      }, 1000);
     }
 
     public function testCreate():void {
-      resource.create({post: {subject: "creating new post", body: "creating new post with body"}}, 
-                      asyncHandler(function(e:ResultEvent, data:Object):void {
-                        resource.show(e.result.id, null, asyncHandler(function(rs:ResultEvent, data:Object):void {
-                          assertEquals('creating new post', rs.result.subject);
-                          assertEquals('creating new post with body', rs.result.body);
-                        }, 1500));
-                      }, 1500));
+      doTest(resource.create({post: {subject: "creating new post", body: "creating new post with body"}}), function(result:Object):void {
+        doTest(resource.show(result.id), function(result2:Object):void {
+          assertEquals('creating new post', result2.subject);
+          assertEquals('creating new post with body', result2.body);
+        }, 1000);
+      }, 1000);
     }
 
-    public function testUpdate():void {
-      resource.update(2, 
-                      {post: {subject: "testFindAll #2 updated", body: "testFindAll #2 body updated"}},
-                      asyncHandler(function(e:ResultEvent, data:Object):void {
-                        resource.show(e.result.id, null, asyncHandler(function (r:ResultEvent, data:Object):void {
-                          assertEquals('testFindAll #2 updated', r.result.subject);
-                          assertEquals('testFindAll #2 body updated', r.result.body);
-                        }, 1500));
-                      }, 1500));
+   public function testUpdate():void {
+     doTest(resource.update(2, {post: {subject: "testFindAll #2 updated", body: "testFindAll #2 body updated"}}), 
+            function(result:Object):void {
+              doTest(resource.show(result.id), function (result2:Object):void {
+                assertEquals('testFindAll #2 updated', result2.subject);
+                assertEquals('testFindAll #2 body updated', result2.body);
+              }, 1000);
+            }, 1000);
     }
 
     public function testDestroy():void {
-      resource.destroy(2, null, asyncHandler(function(e:ResultEvent, data:Object):void {
-        var p:Object = e.result;
+      doTest(resource.destroy(2), function(result:Object):void {
+        assertEquals(2, result.id);
         
-        assertEquals(2, p.id);
-        
-        resource.show(p.id, null, asyncHandler(function (e:ResultEvent, data:Object):void {
-          assertEquals(null, e.result.id);
-        }, 1500));
-      }, 1500));
+        doTest(resource.show(result.id), function (result2:Object):void {
+          assertEquals(null, result2.id);
+        }, 1000);
+      }, 1000);
     }
 
     private function get resource():RailsResource {

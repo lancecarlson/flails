@@ -1,6 +1,7 @@
 package flails.resource.mxml {
   import mx.core.IMXMLObject;
   import flash.utils.Dictionary;
+  import flails.resource.Resource;
 
   [DefaultProperty("resources")]
   public class Resources implements IMXMLObject {

@@ -4,34 +4,31 @@ package test.clients {
   import mx.rpc.events.ResultEvent;
 
   import flails.clients.JavaScriptClient;
-  
-  public class JavaScriptClientTest extends TestCase {
-    public function testSendWithoutArguments():void {
-      var client:JavaScriptClient = new JavaScriptClient("noArguments", asyncHandler(function(e:ResultEvent, data:Object):void {
-        assertEquals("Yay! No arguments!", e.result);
-      }, 1000));
 
-      client.send();
+  import test.FlailsTest;
+  
+  public class JavaScriptClientTest extends FlailsTest {
+    public function testSendWithoutArguments():void {
+      doTest(new JavaScriptClient("noArguments").send(), function(data:Object):void {
+        assertEquals("Yay! No arguments!", data);
+      }, 1000);
     }
 
     public function testSendOneArgument():void {
-      var client:JavaScriptClient = new JavaScriptClient("oneArgument", asyncHandler(function(e:ResultEvent, data:Object):void {
-        assertEquals("The argument!", e.result);
-      }, 1000));
-
-      client.send("The argument!");
+      doTest(new JavaScriptClient("oneArgument").send("The argument!"), function(data:Object):void {
+        assertEquals("The argument!", data);
+      }, 1000);
     }
 
     public function testSendManyArguments():void {
-      var client:JavaScriptClient = new JavaScriptClient("manyArguments", asyncHandler(function(e:ResultEvent, data:Object):void {
+      doTest(new JavaScriptClient("manyArguments").send("arg1", "arg2", "arg3"), function(data:Object):void {
         var expected:Array = ["arg1", "arg2", "arg3"];
         
-        assertEquals(expected.length, e.result.length);
-        for (var i:int = 0; i < e.result.length; i++)
-          assertEquals(expected[i], e.result[i]);
-      }, 1000));
+        assertEquals(expected.length, data.length);
 
-      client.send("arg1", "arg2", "arg3");
+        for (var i:int = 0; i < data.length; i++)
+          assertEquals(expected[i], data[i]);
+      }, 1000);
     }
   }
 }

@@ -1,5 +1,6 @@
 package flails.clients {
   import flails.request.HTTPFilter;
+  import flails.request.JSONFilter;
 
   import flash.net.URLRequestHeader;
   import flash.net.URLRequestMethod;
@@ -10,10 +11,11 @@ package flails.clients {
   import mx.logging.Log;
 
   public class RailsClient extends HTTPClientBase {
-    public function RailsClient(url:String, filter:HTTPFilter, method:String, completeHandler:Function = null, errorHandler:Function = null) {
-      super(url, filter, method, completeHandler, errorHandler);
+    public function RailsClient(url:String, method:String, filter:HTTPFilter = null) {
+      super(url, method);
 
-      this.log = Log.getLogger("flails.clients.HTTPRailsClient");
+      this.filter = filter || new JSONFilter();
+      this.log    = Log.getLogger("flails.clients.HTTPRailsClient");
     }
 
     override protected function request(url:String, args:Object, method:String, filter:HTTPFilter):URLRequest {

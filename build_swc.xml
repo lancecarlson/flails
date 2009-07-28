@@ -11,17 +11,18 @@
   </compiler>
 
   <include-classes>
-      <class>flails.resource.Resources</class>
+      <class>flails.resource.mxml.Resources</class>
       <class>flails.resource.Resource</class>
-      <class>flails.request.RequestPipe</class>
+      <class>flails.resource.mxml.RailsResource</class>
+      <class>flails.resource.mxml.JavaScriptResource</class>
       <class>flails.request.RequestConfig</class>
       <class>flails.request.RequestParam</class>
-      <class>flails.request.HTTPClient</class>
       <class>flails.request.ResourcePathBuilder</class>
-      <class>flails.request.JavaScriptClient</class>
-      <class>flails.request.ResourceJavaScriptBuilder</class>
       <class>flails.request.JSONFilter</class>
-      <class>flails.request.IdentityFilter</class>
+      <class>flails.clients.HTTPClientBase</class>
+      <class>flails.clients.RailsClient</class>
+      <class>flails.clients.JavaScriptClient</class>
+      <class>flails.resource.Record</class>
   </include-classes>
 
   <metadata>

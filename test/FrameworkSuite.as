@@ -7,6 +7,7 @@ package test {
 
   public class FrameworkSuite extends TestSuite {
     public function FrameworkSuite() {
+      addTestCase(new ResultTest());
       addTestCase(new RailsResourceTest());
       addTestCase(new JSONFilterTest());
       addTestCase(new RailsClientTest());
