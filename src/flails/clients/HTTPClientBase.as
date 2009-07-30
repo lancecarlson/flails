@@ -15,6 +15,7 @@ package flails.clients {
   
   import mx.logging.ILogger;
   import mx.logging.Log;
+  import mx.utils.ObjectUtil;
 
   import flails.request.HTTPFilter;
   import flails.request.Result;
@@ -38,7 +39,10 @@ package flails.clients {
     }
 
     public function send(... args):Result {
-      log.debug("Sending request to " + url + " [" + method + "]");
+      if (Log.isDebug()) {
+        log.debug("Sending request to " + url + " [" + method + "]");
+        log.debug("Request data: " + ObjectUtil.toString(args));
+      }
 
       var loader:URLLoader = new URLLoader();
       var result:Result    = new Result(filter);
