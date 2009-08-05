@@ -20,6 +20,16 @@ package flails.resource.mxml {
     public function initialized(parent:Object, id:String):void {
     }
 
+    public function get resources():Array {
+      var rArray:Array = new Array();
+
+      for each (var n:String in _resources) {
+        rArray.push(_resources[n]);
+      }
+
+      return rArray;
+    }
+
     public function resource(name:String):Resource {
       return getResource(name);
     }

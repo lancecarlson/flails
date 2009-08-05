@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <componentPackage>
-  <component id="Resources" class="flails.resource.mxml.Resources"/>
-  <component id="RailsResource" class="flails.resource.mxml.RailsResource"/>
-  <component id="JavaScriptResource" class="flails.resource.mxml.JavaScriptResource"/>
+  <component id="Resource" class="flails.resource.mxml.Resource"/>
   <component id="RequestConfig" class="flails.request.RequestConfig"/>
   <component id="RequestParam" class="flails.request.RequestParam"/>
 </componentPackage>

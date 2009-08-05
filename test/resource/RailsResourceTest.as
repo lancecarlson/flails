@@ -1,10 +1,10 @@
-package test.resource.mxml {
+package test.resource {
   import mx.rpc.events.ResultEvent;
 
   import flails.clients.HTTPClientBase;
   import flails.clients.RailsClient;
   import flails.request.JSONFilter;
-  import flails.resource.mxml.RailsResource;
+  import flails.resource.RailsResource;
   import flails.request.Result;
 
   import test.FlailsTest;
@@ -61,13 +61,7 @@ package test.resource.mxml {
     }
 
     private function get resource():RailsResource {
-      var r:RailsResource = new RailsResource();
-
-      r.baseURL = "http://localhost:3000";
-      r.name    = "posts"
-      r.initialized(null, null);
-
-      return r;
+      return new RailsResource({baseURL: "http://localhost:3000", name: "posts"});
     }
   }
 }
