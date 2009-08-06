@@ -16,8 +16,6 @@ package flails.resource {
   import mx.utils.ObjectUtil;
 
   public class RailsResource implements IResource {
-    public var requestConfig:RequestConfig;
-
     private var filter:HTTPFilter;
     private var config:Object;
 
@@ -64,8 +62,8 @@ package flails.resource {
     private function requestData(data:Object):Object {
       var out:Object = new Object();
 
-      if (requestConfig) {
-        for each (var o:Object in requestConfig.extraParams) {
+      if (config.requestConfig) {
+        for each (var o:Object in config.requestConfig.extraParams) {
           out[o.name] = o.value;
         }
       }
