@@ -1,7 +1,4 @@
 package flails.clients {
-  import flails.request.HTTPFilter;
-  import flails.request.JSONFilter;
-
   import flash.net.URLRequestHeader;
   import flash.net.URLRequestMethod;
   import flash.net.URLRequest;
@@ -11,17 +8,16 @@ package flails.clients {
   import mx.logging.Log;
 
   public class RailsClient extends HTTPClientBase {
-    public function RailsClient(url:String, method:String, filter:HTTPFilter = null) {
+    public function RailsClient(url:String, method:String) {
       super(url, method);
 
-      this.filter = filter || new JSONFilter();
       this.log    = Log.getLogger("flails.clients.HTTPRailsClient");
     }
 
-    override protected function request(url:String, args:Object, method:String, filter:HTTPFilter):URLRequest {
+    override protected function request(url:String, args:Object, method:String, contentType:String):URLRequest {
       var r:URLRequest = new URLRequest(url);
 
-      r.contentType = contentType(filter, method);
+      r.contentType = selectContentType(contentType, method);
       r.method      = requestMethod(method);
       r.data        = argsToVariables(args, method);
 
@@ -32,9 +28,9 @@ package flails.clients {
       return method == HTTPClientBase.METHOD_GET ? URLRequestMethod.GET : URLRequestMethod.POST;
     }
 
-    private function contentType(filter:HTTPFilter, method:String):String {
+    private function selectContentType(contentType:String, method:String):String {
       if (method == HTTPClientBase.METHOD_GET) {
-        return filter.contentType;
+        return contentType;
       } else {
         return "application/x-www-form-urlencoded";
       }

@@ -30,7 +30,7 @@ package flails.clients {
     public function send(... args):Result {
       log.debug("Calling " + methodName);
 
-      var result:Result = new Result(new IdentityFilter());
+      var result:Result = new Result(new IdentityFilter().load);
 
       ExternalInterface.addCallback(methodName + "Result", function(data:Object):void {
         log.debug("Called back " + methodName + "Result" + " with result: " + data);

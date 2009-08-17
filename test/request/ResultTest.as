@@ -9,7 +9,7 @@ package test.request {
 
   public class ResultTest extends TestCase {
     public function testBinding():void {
-      var r:Result = new Result(new IdentityFilter());
+      var r:Result = new Result(new IdentityFilter().load);
 
       r.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, asyncHandler(function(e:PropertyChangeEvent, data:Object):void {
         assertEquals(3, e.newValue);

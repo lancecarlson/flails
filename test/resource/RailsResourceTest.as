@@ -11,7 +11,12 @@ package test.resource {
 
   public class RailsResourceTest extends FlailsTest {
     override protected function setUp():void {
-      new RailsClient("http://localhost:3000/posts/reset", HTTPClientBase.METHOD_GET, null).send();
+      var c:RailsClient = new RailsClient("http://localhost:3000/posts/reset", HTTPClientBase.METHOD_GET);
+      
+      c.result      = new Result(new JSONFilter().load);
+      c.contentType = JSONFilter.CONTENT_TYPE;
+
+      c.send();
     }
 
     public function testIndex():void {

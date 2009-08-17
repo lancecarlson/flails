@@ -11,12 +11,12 @@ package flails.request {
   public class Result {
     private var _responder:IResponder;
     private var _result:Object;
-    private var filter:Filter;
+    private var loadFunction:Function;
     private var log:ILogger;
     
-    public function Result(filter:Filter) {
-      this.filter = filter;
-      this.log    = Log.getLogger("flails.request.Result");
+    public function Result(loadFunction:Function) {
+      this.loadFunction = loadFunction;
+      this.log          = Log.getLogger("flails.request.Result");
     }
 
     public function get responder():IResponder {
@@ -56,7 +56,7 @@ package flails.request {
       var response:URLLoader = URLLoader(event.target);
       
       if (response.data.replace(" ", "").length != 0) {
-        result = filter.load(response.data);
+        result = loadFunction(response.data);
       } else if (_responder != null) {
         _responder.result(null);
       }

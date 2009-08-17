@@ -5,10 +5,11 @@ package test.clients {
   import flails.clients.RailsClient;
   import flails.clients.HTTPClientBase;
   import flails.request.Result;
+  import flails.request.JSONFilter;
   
   public class RailsClientTest extends FlailsTest {
     public function testPost():void {
-      var client:RailsClient = new RailsClient("http://localhost:3000/clients", HTTPClientBase.METHOD_POST);
+      var client:RailsClient = client("http://localhost:3000/clients", HTTPClientBase.METHOD_POST);
 
       doTest(client.send({test_object: {var1: "one", var2: "two"}}), function (result:Object):void {
         assertEquals(result.var1, "created-one");
@@ -17,7 +18,7 @@ package test.clients {
     }
 
     public function testGet():void {
-      var client:RailsClient = new RailsClient("http://localhost:3000/clients", HTTPClientBase.METHOD_GET);
+      var client:RailsClient = client("http://localhost:3000/clients", HTTPClientBase.METHOD_GET);
 
       doTest(client.send({test_object: {var1: "one", var2: "two"}}), function(result:Array):void {
         assertEquals(result[0].var1, "0-one");
@@ -28,7 +29,7 @@ package test.clients {
     }
 
     public function testPut():void {
-      var client:RailsClient = new RailsClient("http://localhost:3000/clients/1", HTTPClientBase.METHOD_PUT);
+      var client:RailsClient = client("http://localhost:3000/clients/1", HTTPClientBase.METHOD_PUT);
 
       doTest(client.send({test_object: {var1: "one", var2: "two"}}), function (result:Object):void {
         assertEquals(result.id, "1");
@@ -38,12 +39,21 @@ package test.clients {
     }
 
     public function testDelete():void {
-      var client:RailsClient = new RailsClient("http://localhost:3000/clients/100", HTTPClientBase.METHOD_DELETE)
+      var client:RailsClient = client("http://localhost:3000/clients/100", HTTPClientBase.METHOD_DELETE)
       
       doTest(client.send(), function (result:Object):void {
         assertEquals(result.id, "100");
         assertEquals(result.deleted, true);                                                         
       }, 1000);
+    }
+
+    protected function client(url:String, method:String):RailsClient {
+      var c:RailsClient = new RailsClient(url, method);
+      
+      c.result      = new Result(new JSONFilter().load);
+      c.contentType = JSONFilter.CONTENT_TYPE;
+
+      return c;
     }
   }
 }

@@ -25,23 +25,23 @@ package flails.resource {
     }
     
     public function index(data:Object = null):Result {
-      return new RailsClient(collection('index'), HTTPClientBase.METHOD_GET, filter).send(requestData(data));
+      return client(collection('index'), HTTPClientBase.METHOD_GET).send(requestData(data));
     }
 
     public function show(id:Object = null, data:Object = null):Result {
-      return new RailsClient(member('show', id), HTTPClientBase.METHOD_GET, filter).send(requestData(data));
+      return client(member('show', id), HTTPClientBase.METHOD_GET).send(requestData(data));
     }
 
     public function create(data:Object = null):Result {
-      return new RailsClient(collection('create'), HTTPClientBase.METHOD_POST, filter).send(requestData(data));
+      return client(collection('create'), HTTPClientBase.METHOD_POST).send(requestData(data));
     }
 
     public function update(id:Object = null, data:Object = null):Result {
-      return new RailsClient(member('update', id), HTTPClientBase.METHOD_PUT, filter).send(requestData(data));
+      return client(member('update', id), HTTPClientBase.METHOD_PUT).send(requestData(data));
     }
 
     public function destroy(id:Object, data:Object = null):Result {
-      return new RailsClient(member('destroy', id), HTTPClientBase.METHOD_DELETE, filter).send(requestData(data));
+      return client(member('destroy', id), HTTPClientBase.METHOD_DELETE).send(requestData(data));
     }
 
     private function collection(method:String):String {
@@ -57,6 +57,15 @@ package flails.resource {
         (id != null ? "/" + id : "") +
         (method == "show" || method == "update" || method == "destroy" ? "" : "/" + method) + 
         (filter.extension != null ? "" : "." + filter.extension);
+    }
+
+    private function client(url:String, method:String):RailsClient {
+      var c:RailsClient = new RailsClient(url, method);
+
+      c.result      = new Result(filter.load);
+      c.contentType = filter.contentType;
+      
+      return c;
     }
 
     private function requestData(data:Object):Object {

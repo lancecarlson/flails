@@ -26,7 +26,8 @@ package flails.clients {
     public static const METHOD_PUT:String = "PUT";
     public static const METHOD_DELETE:String = "DELETE";
 
-    public var filter:HTTPFilter;
+    public var contentType:String;
+    public var result:Result;
 
     protected var log:ILogger;
     
@@ -45,17 +46,20 @@ package flails.clients {
       }
 
       var loader:URLLoader = new URLLoader();
-      var result:Result    = new Result(filter);
 
-      loader.addEventListener(Event.COMPLETE, result.onComplete);
+      loader.addEventListener(Event.COMPLETE, function(e:Event):void {
+        result.onComplete(e);
+        loader.removeEventListener(Event.COMPLETE, arguments.callee);
+      });
+
       //loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
 
-      loader.load(request(url, args.length == 1 ? args[0] : null, method, filter));
+      loader.load(request(url, args.length == 1 ? args[0] : null, method, contentType));
 
       return result;
     }
 
-    protected function request(url:String, args:Object, method:String, filter:HTTPFilter):URLRequest {
+    protected function request(url:String, args:Object, method:String, contentType:String):URLRequest {
       throw new IllegalOperationError("This method needs to be overriden");
     }
   }
