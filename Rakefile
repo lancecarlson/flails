@@ -34,6 +34,7 @@ namespace :compile do
   desc "Compile tests"
   task :tests do
     cmd = "mxmlc"
+    cmd << " -debug=true"
     cmd << " -source-path #{CURRENT_DIR}/src"
     cmd << " -output #{TEST_SWF}"
     cmd << " -library-path+=#{SWC_DIR}"
