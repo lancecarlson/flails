@@ -3,7 +3,7 @@ package test {
 
   import test.FlailsTest;
   
-  public class IdentityMapTestSet extends FlailsTest {
+  public class IdentityMapTestFetchAndUpdate extends FlailsTest {
     private var im:IdentityMap;
 
     override protected function setUp():void {
@@ -25,6 +25,13 @@ package test {
       im.fetchAndUpdate(null, {id: null, attr1: "val1"});
 
       assertNull(im.fetchAndUpdate(null, {id: null, attr2: "val2"}).attr1);
+      assertNotNull(im.fetchAndUpdate(null, {id: null, attr2: "val2"}).attr2);
+    }
+
+    public function testFetchExistingModel():void {
+      im.fetchAndUpdate("yo", {id: "yo", attr1: "val1"});
+
+      assertEquals("val1", im.fetchAndUpdate("yo", {}).attr1);
     }
   }
 }

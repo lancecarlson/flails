@@ -7,7 +7,7 @@ package test {
 
   public class FrameworkSuite extends TestSuite {
     public function FrameworkSuite() {
-      addTestCase(new IdentityMapTestSet());
+      addTestCase(new IdentityMapTestFetchAndUpdate());
       addTestCase(new ResourceTest());
       addTestCase(new ResultTest());
       addTestCase(new RailsResourceTest());
