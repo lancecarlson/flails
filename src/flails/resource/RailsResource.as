@@ -75,7 +75,7 @@ package flails.resource {
       var result:* = filter.load(data);
 
       if (result is Array) {
-        return identityMap.fetchAndUpdateCollection("id", result as Array);
+        return identityMap.fetchAndUpdateArray("id", result as Array);
       }
 
       return identityMap.fetchAndUpdate(result.id, result);

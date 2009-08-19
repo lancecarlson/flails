@@ -3,7 +3,7 @@ package test {
 
   import test.FlailsTest;
   
-  public class IdentityMapTestFetchAndUpdateCollection extends FlailsTest {
+  public class IdentityMapTestFetchAndUpdateArray extends FlailsTest {
     private var im:IdentityMap;
 
     override protected function setUp():void {
@@ -11,7 +11,7 @@ package test {
     }
     
     public function testInstatiatesClass():void {
-      for each (var o:TheClass in im.fetchAndUpdateCollection("id", [{id: "me", attr1: "val1"}, {id: "you", attr1: "val11"}]));
+      for each (var o:TheClass in im.fetchAndUpdateArray("id", [{id: "me", attr1: "val1"}, {id: "you", attr1: "val11"}]));
     }
   }
 }

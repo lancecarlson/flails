@@ -21,12 +21,12 @@ package test.resource {
     }
 
     public function testIndex():void {
-      doTest(resource.index(), function (a:ArrayCollection):void {
+      doTest(resource.index(), function (a:Array):void {
         assertEquals(2, a.length);
-        assertEquals('testFindAll #1', a.getItemAt(0).subject);
-        assertEquals('testFindAll #1 body', a.getItemAt(0).body);
-        assertEquals('testFindAll #2', a.getItemAt(1).subject);
-        assertEquals('testFindAll #2 body', a.getItemAt(1).body);
+        assertEquals('testFindAll #1', a[0].subject);
+        assertEquals('testFindAll #1 body', a[0].body);
+        assertEquals('testFindAll #2', a[1].subject);
+        assertEquals('testFindAll #2 body', a[1].body);
       }, 1000);
     }
 
