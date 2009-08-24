@@ -6,7 +6,7 @@ package flails.resource {
   import flash.events.EventDispatcher;
 
   import flails.IdentityMap;
-  import flails.clients.HTTPClientBase;
+  import flails.clients.HTTPRequestMethod;
   import flails.clients.RailsClient;
   import flails.clients.ResourceClient;
   import flails.request.HTTPFilter;
@@ -28,23 +28,23 @@ package flails.resource {
     }
     
     public function index(data:Object = null):Result {
-      return client(collection('index'), HTTPClientBase.METHOD_GET).send(requestData(data));
+      return client(collection('index'), HTTPRequestMethod.GET).send(requestData(data));
     }
 
     public function show(id:Object = null, data:Object = null):Result {
-      return client(member('show', id), HTTPClientBase.METHOD_GET).send(requestData(data));
+      return client(member('show', id), HTTPRequestMethod.GET).send(requestData(data));
     }
 
     public function create(data:Object = null):Result {
-      return client(collection('create'), HTTPClientBase.METHOD_POST).send(requestData(data));
+      return client(collection('create'), HTTPRequestMethod.POST).send(requestData(data));
     }
 
     public function update(id:Object = null, data:Object = null):Result {
-      return client(member('update', id), HTTPClientBase.METHOD_PUT).send(requestData(data));
+      return client(member('update', id), HTTPRequestMethod.PUT).send(requestData(data));
     }
 
     public function destroy(id:Object, data:Object = null):Result {
-      return client(member('destroy', id), HTTPClientBase.METHOD_DELETE).send(requestData(data));
+      return client(member('destroy', id), HTTPRequestMethod.DELETE).send(requestData(data));
     }
 
     private function collection(method:String):String {
