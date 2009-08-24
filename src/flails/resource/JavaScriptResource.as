@@ -19,7 +19,7 @@ package flails.resource {
     }
 
     override public function show(id:Object = null, data:Object = null):Result {
-      return new JavaScriptClient(pathBuilder.show()).send(id, data);
+      return new JavaScriptClient(pathBuilder.show(), [id, data]).send();
     }
   }
 }

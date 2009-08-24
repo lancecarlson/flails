@@ -15,13 +15,13 @@ package test.clients {
     }
 
     public function testSendOneArgument():void {
-      doTest(new JavaScriptClient("oneArgument").send("The argument!"), function(data:Object):void {
+      doTest(new JavaScriptClient("oneArgument", "The argument!").send(), function(data:Object):void {
         assertEquals("The argument!", data);
       }, 1000);
     }
 
     public function testSendManyArguments():void {
-      doTest(new JavaScriptClient("manyArguments").send("arg1", "arg2", "arg3"), function(data:Object):void {
+      doTest(new JavaScriptClient("manyArguments", ["arg1", "arg2", "arg3"]).send(), function(data:Object):void {
         var expected:Array = ["arg1", "arg2", "arg3"];
         
         assertEquals(expected.length, data.length);

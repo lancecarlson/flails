@@ -8,8 +8,8 @@ package flails.clients {
   import mx.logging.Log;
 
   public class RailsClient extends AbstractHTTPClient {
-    public function RailsClient(url:String, method:String) {
-      super(url, method);
+    public function RailsClient(url:String, method:String, requestData:Object = null) {
+      super(url, method, requestData);
 
       this.log    = Log.getLogger("flails.clients.HTTPRailsClient");
     }
