@@ -8,9 +8,14 @@ package flails.request {
   import flails.resource.Record;
   import flails.request.Filter;
   
+  import mx.logging.ILogger;
+  import mx.logging.Log;
+
   public class JSONFilter implements HTTPFilter {
     public static const CONTENT_TYPE:String = "application/json";
     public static const EXTENSION:String = "json";
+
+    private var log:ILogger = Log.getLogger("flails.request.JSONFilter");
 
     public function JSONFilter() {}
     
@@ -23,7 +28,15 @@ package flails.request {
     }
 
     public function load(data:Object):Object {
-      return JSON.decode(data as String);
+      try {
+        return JSON.decode(data as String);
+      } catch (e:JSONParseError) {
+        e.message = e.message + ": " + data;
+        
+        throw e;
+      }
+
+      return null;
     }
   }
 }
