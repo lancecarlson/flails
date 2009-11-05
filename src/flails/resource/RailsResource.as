@@ -5,7 +5,6 @@
 package flails.resource {
   import flash.events.EventDispatcher;
 
-  import flails.IdentityMap;
   import flails.clients.HTTPClientBase;
   import flails.clients.RailsClient;
   import flails.clients.ResourceClient;
@@ -19,12 +18,10 @@ package flails.resource {
   public class RailsResource implements IResource {
     private var filter:HTTPFilter;
     private var config:Object;
-    private var identityMap:IdentityMap;
 
     public function RailsResource(config:Object) {
-      this.config      = config;
-      this.identityMap = new IdentityMap(config.modelClass);
-      filter           = new JSONFilter();
+      this.config = config;
+      filter      = new JSONFilter();
     }
     
     public function index(data:Object = null):Result {
@@ -65,20 +62,10 @@ package flails.resource {
     private function client(url:String, method:String):RailsClient {
       var c:RailsClient = new RailsClient(url, method);
 
-      c.result      = new Result(fromIdentityMap);
+      c.result      = new Result(filter.load);
       c.contentType = filter.contentType;
       
       return c;
-    }
-
-    private function fromIdentityMap(data:Object):* {
-      var result:* = filter.load(data);
-
-      if (result is Array) {
-        return identityMap.fetchAndUpdateCollection("id", result as Array);
-      }
-
-      return identityMap.fetchAndUpdate(result.id, result);
     }
 
     private function requestData(data:Object):Object {
