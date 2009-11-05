@@ -11,10 +11,14 @@ package flails {
       this.modelClass = modelClass;
     }
 
-    public function fetchAndUpdateArray(idProperty:String, data:Array):Array {
-      return data.map(function(item:*, ... rest):Object {
-        return fetchAndUpdate(item[idProperty], item);
-      });
+    public function fetchAndUpdateCollection(idProperty:String, data:Array):ArrayCollection {
+      var coll:ArrayCollection = new ArrayCollection();
+
+      for each (var o:Object in data) {
+        coll.addItem(fetchAndUpdate(o[idProperty], o));
+      }
+
+      return coll;
     }
 
     public function fetchAndUpdate(id:Object, attributes:Object):* {
