@@ -7,7 +7,7 @@ package flails.clients {
   import mx.logging.ILogger;
   import mx.logging.Log;
 
-  public class RailsClient extends AbstractHTTPClient {
+  public class RailsClient extends HTTPClientBase {
     public function RailsClient(url:String, method:String) {
       super(url, method);
 
@@ -25,11 +25,11 @@ package flails.clients {
     }
 
     private function requestMethod(method:String):String {
-      return method == HTTPRequestMethod.GET ? URLRequestMethod.GET : URLRequestMethod.POST;
+      return method == HTTPClientBase.METHOD_GET ? URLRequestMethod.GET : URLRequestMethod.POST;
     }
 
     private function selectContentType(contentType:String, method:String):String {
-      if (method == HTTPRequestMethod.GET) {
+      if (method == HTTPClientBase.METHOD_GET) {
         return contentType;
       } else {
         return "application/x-www-form-urlencoded";
@@ -39,7 +39,7 @@ package flails.clients {
     private function argsToVariables(params:Object, method:String):Object {
       var variables:URLVariables = new URLVariables();
       
-      if (method == HTTPRequestMethod.PUT || method == HTTPRequestMethod.DELETE) {
+      if (method == HTTPClientBase.METHOD_PUT || method == HTTPClientBase.METHOD_DELETE) {
         variables["_method"] = method.toLowerCase();
       }
 

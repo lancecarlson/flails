@@ -3,13 +3,13 @@ package test.clients {
   import test.TestResponder;
 
   import flails.clients.RailsClient;
-  import flails.clients.HTTPRequestMethod;
+  import flails.clients.HTTPClientBase;
   import flails.request.Result;
   import flails.request.JSONFilter;
   
   public class RailsClientTest extends FlailsTest {
     public function testPost():void {
-      var client:RailsClient = client("http://localhost:3000/clients", HTTPRequestMethod.POST);
+      var client:RailsClient = client("http://localhost:3000/clients", HTTPClientBase.METHOD_POST);
 
       doTest(client.send({test_object: {var1: "one", var2: "two"}}), function (result:Object):void {
         assertEquals(result.var1, "created-one");
@@ -18,7 +18,7 @@ package test.clients {
     }
 
     public function testGet():void {
-      var client:RailsClient = client("http://localhost:3000/clients", HTTPRequestMethod.GET);
+      var client:RailsClient = client("http://localhost:3000/clients", HTTPClientBase.METHOD_GET);
 
       doTest(client.send({test_object: {var1: "one", var2: "two"}}), function(result:Array):void {
         assertEquals(result[0].var1, "0-one");
@@ -29,7 +29,7 @@ package test.clients {
     }
 
     public function testPut():void {
-      var client:RailsClient = client("http://localhost:3000/clients/1", HTTPRequestMethod.PUT);
+      var client:RailsClient = client("http://localhost:3000/clients/1", HTTPClientBase.METHOD_PUT);
 
       doTest(client.send({test_object: {var1: "one", var2: "two"}}), function (result:Object):void {
         assertEquals(result.id, "1");
@@ -39,7 +39,7 @@ package test.clients {
     }
 
     public function testDelete():void {
-      var client:RailsClient = client("http://localhost:3000/clients/100", HTTPRequestMethod.DELETE)
+      var client:RailsClient = client("http://localhost:3000/clients/100", HTTPClientBase.METHOD_DELETE)
       
       doTest(client.send(), function (result:Object):void {
         assertEquals(result.id, "100");

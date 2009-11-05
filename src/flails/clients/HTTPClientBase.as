@@ -20,7 +20,7 @@ package flails.clients {
   import flails.request.HTTPFilter;
   import flails.request.Result;
   
-  public class AbstractHTTPClient extends EventDispatcher {
+  public class HTTPClientBase extends EventDispatcher {
     public static const METHOD_POST:String = "POST";
     public static const METHOD_GET:String = "GET";
     public static const METHOD_PUT:String = "PUT";
@@ -34,7 +34,7 @@ package flails.clients {
     private var url:String;
     private var method:String;
 
-    public function AbstractHTTPClient(url:String, method:String = METHOD_GET) {
+    public function HTTPClientBase(url:String, method:String = METHOD_GET) {
       this.url    = url;
       this.method = method;
     }

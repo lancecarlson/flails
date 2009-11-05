@@ -2,7 +2,7 @@ package test.resource {
   import mx.rpc.events.ResultEvent;
   import mx.collections.ArrayCollection;
 
-  import flails.clients.HTTPRequestMethod;
+  import flails.clients.HTTPClientBase;
   import flails.clients.RailsClient;
   import flails.request.JSONFilter;
   import flails.resource.RailsResource;
@@ -12,7 +12,7 @@ package test.resource {
 
   public class RailsResourceTest extends FlailsTest {
     override protected function setUp():void {
-      var c:RailsClient = new RailsClient("http://localhost:3000/posts/reset", HTTPRequestMethod.GET);
+      var c:RailsClient = new RailsClient("http://localhost:3000/posts/reset", HTTPClientBase.METHOD_GET);
       
       c.result      = new Result(new JSONFilter().load);
       c.contentType = JSONFilter.CONTENT_TYPE;
