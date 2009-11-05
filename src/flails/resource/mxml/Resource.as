@@ -18,6 +18,7 @@ package flails.resource.mxml {
   dynamic public class Resource extends Proxy implements IMXMLObject, IResource {
     public var type:String;
     public var resource:IResource;
+    public var recordClass:Class;
 
     private var _config:Object = new Object;
     private var parent:Object;
