@@ -28,23 +28,23 @@ package flails.resource {
     }
     
     public function index(data:Object = null):Result {
-      return client(collection('index'), HTTPRequestMethod.GET, requestData(data)).send();
+      return client(collection('index'), HTTPRequestMethod.GET).send(requestData(data));
     }
 
     public function show(id:Object = null, data:Object = null):Result {
-      return client(member('show', id), HTTPRequestMethod.GET, requestData(data)).send();
+      return client(member('show', id), HTTPRequestMethod.GET).send(requestData(data));
     }
 
     public function create(data:Object = null):Result {
-      return client(collection('create'), HTTPRequestMethod.POST, requestData(data)).send();
+      return client(collection('create'), HTTPRequestMethod.POST).send(requestData(data));
     }
 
     public function update(id:Object = null, data:Object = null):Result {
-      return client(member('update', id), HTTPRequestMethod.PUT, requestData(data)).send();
+      return client(member('update', id), HTTPRequestMethod.PUT).send(requestData(data));
     }
 
     public function destroy(id:Object, data:Object = null):Result {
-      return client(member('destroy', id), HTTPRequestMethod.DELETE, requestData(data)).send();
+      return client(member('destroy', id), HTTPRequestMethod.DELETE).send(requestData(data));
     }
 
     private function collection(method:String):String {
@@ -62,8 +62,8 @@ package flails.resource {
         (filter.extension != null ? "" : "." + filter.extension);
     }
 
-    private function client(url:String, method:String, data:Object):RailsClient {
-      var c:RailsClient = new RailsClient(url, method, data);
+    private function client(url:String, method:String):RailsClient {
+      var c:RailsClient = new RailsClient(url, method);
 
       c.result      = new Result(fromIdentityMap);
       c.contentType = filter.contentType;

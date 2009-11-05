@@ -16,18 +16,18 @@ package flails.clients {
   import flails.request.Result;
   import flails.request.IdentityFilter;
   
-  public class JavaScriptClient extends AbstractClient {
+  public class JavaScriptClient extends EventDispatcher {
+    protected var log:ILogger;
+
     private var methodName:String;
 
-    public function JavaScriptClient(methodName:String, requestData:Object = null) {
-      super(requestData);
-
+    public function JavaScriptClient(methodName:String) {
       log = Log.getLogger("flails.clients.JavaScriptClient");
 
       this.methodName = methodName;
     }
 
-    override public function send():Result {
+    public function send(... args):Result {
       log.debug("Calling " + methodName);
 
       var result:Result = new Result(new IdentityFilter().load);
@@ -39,7 +39,7 @@ package flails.clients {
       });
       ExternalInterface.addCallback(methodName + "Error", onError);
 
-      ExternalInterface.call.apply(ExternalInterface, [methodName].concat(requestData is Array ? requestData : [requestData]));
+      ExternalInterface.call.apply(ExternalInterface, [methodName].concat(args));
 
       return result;
     }
